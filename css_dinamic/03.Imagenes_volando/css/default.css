@@ -1,0 +1,95 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body {
+	margin: 3em 9em;
+	}
+header {
+	width: 50%;
+	margin: 2em auto 4em auto;
+	padding: 2em 1em;
+	background-color: maroon;
+	color: white;
+	color: beige;
+	border-radius: 20px;
+	box-shadow: 2px 2px 2px 2px silver;
+	}
+ header > p {
+ 	font-size: 1.3em;
+ }
+footer {
+ 	margin-top:  2em;
+ 	border-top: solid 1px silver;
+ 	color: maroon;
+	width: 100%;
+	/*background-color: #bbb; */
+ 	}
+ 	footer p {
+ 		margin: 0.2em;
+	 }
+	 
+	 footer.fixed {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	 }
+ header, footer, figure {
+ 	text-align: center;
+ 	}
+
+nav{
+	overflow: auto;
+	display: inline-block;
+}
+
+	nav .boton{
+		float: left;
+		margin: 5px;
+		border:1px solid black;
+		padding: 5px;
+	}
+	/*Reubicamos el contenedor de las imágenes*/
+	nav .boton + figure{
+		position: absolute;
+		left: 36%;
+		top: 40%;
+		margin-left: 300px;
+		transition: 1s;
+	}	
+	/* Damos tamaño 0 a las imágenes*/
+	nav .boton + figure img{
+		height: auto;
+		width: 0;
+		transition: 3s all;
+	}
+
+	/*Cambios en el "boton" al pasaar el ratón*/
+
+	nav .rotacion:hover{
+		-webkit-transform: rotate(90deg);
+	}
+
+	nav .boton:hover{
+		background-color:maroon;
+		box-shadow: 0px 0px 5px black;
+		cursor: pointer;
+	}
+
+	.boton:hover + figure {
+		margin-left: 0px;
+	}
+
+	.boton:hover + figure img{
+		width: 400px;
+		-moz-transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+	}
+
+main{
+	min-height: 50vh;
+}
+
+
+
+*/

@@ -1,0 +1,55 @@
+h1 {
+    font-size: 2rem;
+    color: papayawhip;
+    background-color: maroon;
+    border: 1px solid;
+    border-radius: 10rem;
+    min-height: 3rem;
+    padding: 1rem;
+    -webkit-transition: all 2s cubic-bezier(.18,1.33,1,-0.49) 1s;
+    transition: all 2s cubic-bezier(.18,1.33,1,-0.49) 1s;
+/*     transition-property: font-size;
+    transition-duration: 2s;
+    transition-timing-function: cubic-bezier(.18,1.33,1,-0.49);
+    transition-delay: 1s; */
+}
+
+h1:hover {
+    font-size: 4rem;
+    background-color: papayawhip;
+    color: maroon;
+    border-radius: 500rem;
+    min-height: 4rem;
+    padding: 2rem;
+}
+
+main div {
+    margin: 2rem;
+    padding: 2rem;
+    border: 1px solid;
+    width: 50%;
+    position: relative;
+    z-index: 2;
+    background-color: peru;
+    transition: background-color 2s linear,
+                transform 2s linear 
+}
+
+main div:nth-of-type(2) {
+    margin-left: 20rem;
+    margin-top: 4rem;
+    width: 20%;
+    border-radius: 10rem;
+    z-index: 1;
+}
+
+main div:nth-of-type(1):hover+div {
+    background-color: royalblue;
+    color: red;
+    /* transform: scale(2) 
+    transform: rotate(-50deg)
+     transform: skew(20deg);
+    */
+    
+    transform: translate(10rem, 5rem) rotate(-50deg)
+}

@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Visual Studio Code" >
+	<meta charset="UTF-8">
+	<title>Menu con transiciones</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+        nav {width: 60%;
+             min-width: 450px;
+             max-height: 80px;
+             background-color: maroon;
+             overflow: auto;
+        }
+        ul {list-style-type: none;
+            padding: 0px; /*Le quitamos el paddding por defecto*/
+            width: 100%;
+        }
+		li {display: inline-block;
+            width: 24%;
+			margin: 0%;
+			padding: 0%;
+		}
+		a { padding: 10px;
+			box-shadow: 0 3px 5px rgba(0,0,0,.5);
+			background-color: rgb(200,200,200);    
+			border-color:rgb(200,200,200);
+			position: relative;
+/*			-webkit-transition: background-color 10s linear, 
+			                    border-color 0.2s, 
+			                    top 0.2s, 
+			                    box-shadow 0.2s;   
+			-moz-transition:  background-color 0.2s, 
+							  border-color 0.2s,
+							  top 0.2s,
+							  box-shadow 0.2s;   
+			-o-transition:  background-color 0.2s, 
+							border-color 0.2, 
+							top 0.2s, 
+							box-shadow 0.2s;   
+			-ms-transition:  background-color 0.2s, 
+							 border-color 0.2s, 
+							 top 0.2s, 
+							 box-shadow 0.2s;
+*/							    
+			transition:  background-color 5s ease-in-out, 
+						 border-color 0.2s, 
+						 top 5s, 
+						 box-shadow 0.2s; 
+
+			} 
+		a:hover, a:focus {    background-color: #fdca00;    
+							  border-color: #fda700; 
+		} 
+		a:active {    top: 3px;    
+					  box-shadow: 0 1px 2px rgba(0,0,0,.5); 
+		}  
+	</style>
+</head>
+
+<body>
+	<h1>Menu con transiciones</h1>
+	<nav>
+		<ul>
+			<li><a href="#">Opción A</a></li>
+			<li><a href="#">Opción B</a></li>
+			<li><a href="#">Opción C</a></li>
+			<li><a href="#">Opción C</a></li>
+		</ul>		
+	</nav>
+</body>
+</html>
