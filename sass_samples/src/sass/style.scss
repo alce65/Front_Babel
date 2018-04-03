@@ -1,0 +1,37 @@
+/* @import "_extras.css"; */
+
+$color_fondo : red;
+
+header {
+    h1 {
+        color: $color_fondo
+    }
+}
+
+main {
+    @import "_extras.scss";
+}
+
+article {
+        color: maroon;
+        margin:  2rem;
+}
+
+div {
+    @extend article;
+    font-size: 1.2rem;
+}
+
+@mixin base ($variable: 2rem, $color:  maroon ) {
+    color:$color;
+    margin:  $variable;
+};
+
+nav {
+    @include base(2rem, red);
+}
+
+aside {
+    @include base(3rem);
+    font-size: 1.2rem;
+}

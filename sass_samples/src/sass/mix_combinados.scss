@@ -1,0 +1,52 @@
+/*Variables*/
+	$nice-blue: #5B83AD; /*rgb(108,148,190)*/
+    $rojo-ladrillo: #B43104; /*rgb(180,49,4)*/
+
+    header {
+		color: $nice-blue;
+        background-color: $rojo-ladrillo;
+	}
+
+/* Operaciones */
+		
+    $light-blue: $nice-blue + #311;
+
+    p {color: $light-blue; }
+
+/* Mixins() */
+
+	@mixin div_basico {
+        $ancho:  50%; //Variables definidas en el mixin
+		$alto: 100px;
+		border: 2px solid $nice-blue;
+		color: $rojo-ladrillo;
+		padding: 0.5em 1em;
+        margin: 1em auto;
+	}
+
+    @mixin borde_redondeado($radio:10px){
+        -webkit-border-radius: $radio;
+        -moz-border-radius: $radio;
+        border-radius: $radio;
+    }
+
+	.caller {
+  	@include div_basico;
+  	//width:  $ancho; // debe leerla del mixin incluido
+  	//height: $alto; // debe leerla del mixin incluido
+	}
+
+	.caller2 {
+  	    @include div_basico();
+        @include borde_redondeado();
+  	}
+
+    .caller3 {
+  	    @include div_basico();
+        @include borde_redondeado(30px);
+  	}
+
+
+/* Footer: CSS tradicional*/
+  	footer {margin-top: 3em;
+			border-top: 2px solid silver;}

@@ -1,0 +1,49 @@
+// Comentario tipo Sass
+
+/* Comentario multilinea
+Como los utilizados en CSS
+*/
+
+/*Variables*/
+
+	$fondo_base: coral;
+	$texto_resaltado: #5B83AD; 
+	$fondo_oscuro: rgb(180,49,4);    
+	$full_columns: 80%;
+	
+  
+/* Operaciones */
+		
+	$fondo_suave: lighten($fondo_base, 10%);        
+	$texto_normal: $texto_resaltado + #11b;
+
+/* Estilos aplicados*/
+
+	* {
+		box-sizing: border-box;
+	}
+	body {
+		background-color: $fondo_base;         
+	}
+
+	header {
+		color: $texto_resaltado;
+		width: $full_columns;
+		background-color: $fondo_oscuro;
+		padding: 1em;
+
+		p {font-size: 1.5rem}
+	}
+
+	section {
+		width: $full_columns;
+		background-color: $fondo_suave;
+		
+
+		p {
+			padding: 1em 2em;;
+			color: $texto_normal; }   
+
+	}
+	
+

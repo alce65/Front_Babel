@@ -1,0 +1,40 @@
+/*Variables*/
+/*rgb(108,148,190)*/
+/*rgb(180,49,4)*/
+header {
+  color: #5B83AD;
+  background-color: #B43104; }
+
+/* Operaciones */
+p {
+  color: #8e94be; }
+
+/* Mixins() */
+.caller {
+  border: 2px solid #5B83AD;
+  color: #B43104;
+  padding: 0.5em 1em;
+  margin: 1em auto; }
+
+.caller2 {
+  border: 2px solid #5B83AD;
+  color: #B43104;
+  padding: 0.5em 1em;
+  margin: 1em auto;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px; }
+
+.caller3 {
+  border: 2px solid #5B83AD;
+  color: #B43104;
+  padding: 0.5em 1em;
+  margin: 1em auto;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px; }
+
+/* Footer: CSS tradicional*/
+footer {
+  margin-top: 3em;
+  border-top: 2px solid silver; }

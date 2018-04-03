@@ -1,0 +1,60 @@
+
+*, *::after, *::before,
+*:after, *:before  {
+  box-sizing: border-box; }
+
+body {
+  width: 80%;
+  margin: 2em auto; 
+ }
+
+header, section,  footer {
+	width: 80%;
+	margin: 2em auto; 
+	overflow: auto;
+}
+
+header {
+	color: #5B83AD; 
+	background-color: #B43104;;
+	padding: 1rem 2rem;
+	// elemento anidado
+	small {
+		font-size: 1.8rem
+	}
+}
+
+p {
+	color: black;
+	padding: 0.5rem 
+	}
+
+article, aside {
+	float: left;
+}
+
+article {
+	width: 59%;
+	margin-right: 2%;
+	// elemento anidado hijo directo
+	>p {
+		 border: 1px solid
+		} 
+}
+
+aside {
+	 width: 39%;
+	// elemento anidado 
+	p {background-color: darkkhaki;
+	// Referencia al antecesor y pseudoclases
+	&:nth-of-type(1) {
+		  color: maroon
+	   } 
+	}  
+}
+
+
+
+.clearfix {
+  clear: both; }	
+	

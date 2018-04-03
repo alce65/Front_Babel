@@ -1,0 +1,26 @@
+/* Comentario multilinea
+Como los utilizados en CSS
+*/
+/*Variables*/
+/* Operaciones */
+/* Estilos aplicados*/
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: coral; }
+
+header {
+  color: #5B83AD;
+  width: 80%;
+  background-color: #b43104;
+  padding: 1em; }
+  header p {
+    font-size: 1.5rem; }
+
+section {
+  width: 80%;
+  background-color: #ffa483; }
+  section p {
+    padding: 1em 2em;
+    color: #6c94ff; }

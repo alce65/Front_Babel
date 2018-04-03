@@ -1,0 +1,39 @@
+*, *::after, *::before,
+*:after, *:before {
+  box-sizing: border-box; }
+
+body {
+  width: 80%;
+  margin: 2em auto; }
+
+div {
+  width: 23%;
+  height: 20ren;
+  background-color: papayawhip;
+  float: left;
+  padding: 2em;
+  border: lpx solid; }
+
+div:not(:last-child) {
+  margin-right: 2%; }
+
+.clearfix {
+  clear: both; }
+
+.selectorA, .selectorC {
+  color: red; }
+
+.selectorA:hover, .selectorC:hover, .selectorD {
+  text-decoration: underline; }
+
+.selectorB, .selectorC, .selectorD {
+  font-size: 24px;
+  background-color: salmon; }
+
+.selectorC {
+  color: white;
+  border: 1px solid #333; }
+
+.selectorD {
+  color: white;
+  border: 1px solid #333; }

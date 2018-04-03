@@ -1,0 +1,24 @@
+// Variables y valores por defecto
+$bg-base: #eee;
+$div-name: test-img;
+$fsize: font-size;
+$fweight: font-weight;
+$misFuentes: Helvetica, Arial, sans-serif;
+$miMapa: (rojo: #f00, azul: #00f, verde: #0f0);
+
+// Variable con un valor por defecto
+$div-name: otro-test-img !default;
+
+// Interpolación de variables: #{}
+.#{$div-name} {
+    height: 200px;
+    color: #f00;
+    #{$fsize}: 24px;
+    #{$fweight}: bold;
+    background-color: $bg-base;
+}
+
+.#{$div-name}-2 {
+    color: #333;
+    background-color: $bg-base;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "sass_samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass" : "node-sass -o ./dist/css ./src/sass",
+    "sass:w" : "node-sass -w -o ./dist/css ./src/sass"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.8.3"
+  }
+}

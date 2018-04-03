@@ -1,0 +1,22 @@
+/* @import "_extras.css"; */
+header h1 {
+  color: red; }
+
+main .extra {
+  color: maroon; }
+
+article, div {
+  color: maroon;
+  margin: 2rem; }
+
+div {
+  font-size: 1.2rem; }
+
+nav {
+  color: red;
+  margin: 2rem; }
+
+aside {
+  color: maroon;
+  margin: 3rem;
+  font-size: 1.2rem; }
