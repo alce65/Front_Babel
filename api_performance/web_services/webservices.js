@@ -15,8 +15,6 @@ function procesarNombres(nombres) {
 	};
 }
 
-
-
 // getIp();
 
 function getIp() {
@@ -39,11 +37,13 @@ function getRepos(user) {
 }
 
 function procesarRepos(reposJSON) {
+	let result = ''
 	var repos = reposJSON.data;
 	postMessage("Angular Repos.Length:" + repos.length);
 	for (var index = 0; index < repos.length; ++index) {
 		var repo = repos[index];
 		if (repo.watchers_count > 100)
-			postMessage("Angular Repo:" + repos[index].full_name);
+		result += "Angular Repo:" + repos[index].full_name + "<br>"
 	};
+	postMessage(result)
 }
