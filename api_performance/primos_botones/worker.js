@@ -1,21 +1,20 @@
-﻿(function () {
-
+﻿(function() {
     function esPrimo(userNumero, aDivisores) {
         var esPrimo = true;
         for (var j = 2; j < userNumero; j++) {
             if (userNumero % j == 0) {
                 esPrimo = false;
                 //aDivisores[aDivisores.length] = j;
-                break;
+                 break;
             } // Fin del if
         } // Fin del for
         return esPrimo;
     } // Fin de la función
-
+    
     // bucle sin fin calculando números primos
-
+    
     let i = 1;
-    postMessage('primosStart');
+    postMessage('primosStert');
     while (true) {
         i++
         if (esPrimo(i)) {
