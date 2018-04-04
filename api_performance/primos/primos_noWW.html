@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Números primos - Web Workers</title>
+	<meta name="description" content="Ejercicios del Curso ASI">
+	<meta name="author" content="Alejandro">
+  	<link rel="shortcut icon" href="fav_icon.png">
+  	<link rel="stylesheet" href="default.css">
+    <script>
+
+        function esPrimo(userNumero, aDivisores) {
+            var esPrimo = true;
+            for (var j = 2; j < userNumero; j++) {
+                if (userNumero % j == 0) {
+                    esPrimo = false;
+                    //aDivisores[aDivisores.length] = j;
+                    break;
+                } // Fin del if
+            } // Fin del for
+            return esPrimo;
+        } // Fin de la función
+
+        function primos() {
+            var domNumeros = document.querySelector("article p span");
+            var i = 1;
+            domNumeros.innerHTML = i;
+            while (true) {
+                i++
+                if (esPrimo(i)) {
+                    domNumeros.innerHTML = i;
+                    console.log(i)
+                }
+                if( i > 300000) {
+                    break
+                }
+            }
+        }
+
+        function main() {
+            var domBoton = document.querySelector("button");
+            domBoton.addEventListener("click", primos, false);
+        }; // Fin de main()
+
+        document.addEventListener("DOMContentLoaded", main, false);
+    </script>
+</head>
+
+ <body>
+  
+  	<header>
+  		<h1>Cálculo de números primos</h1>
+	</header>
+	<article>
+        <button type="button">Comenzar</button> 
+        <p>Este boton lanza una función con un bucle infinito<br>
+        que bloquea completamente el interfaz de usuario</p>
+        <p>Números primos calculados hasta <span></span></p>
+	</article>
+	<footer>
+		<p>
+			&copy; Copyright  by Alejandro L. Cerezo
+		</p>
+	</footer>
+ </body>
+
+</html>

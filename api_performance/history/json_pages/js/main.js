@@ -28,7 +28,7 @@
      * Manejador de eventos de todos los enlaces
      */
     processLink: function (e) {
-      event.preventDefault();
+      e.preventDefault();  
       this.pageInfo = {
         timestamp: (new Date()).getMilliseconds(),
         title: e.currentTarget.title,
