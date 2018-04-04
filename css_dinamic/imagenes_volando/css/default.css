@@ -68,6 +68,7 @@ nav{
 
 	nav .rotacion:hover{
 		-webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
 	}
 
 	nav .boton:hover{
@@ -84,6 +85,7 @@ nav{
 		width: 400px;
 		-moz-transform: rotate(360deg);
 		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
 	}
 
 main{

@@ -1,0 +1,30 @@
+@keyframes colores {
+    0% { background-color: red}
+    25% {background-color: salmon}
+    50% { background-color: yellow}
+    75% { background-color: purple}
+    100% { background-color: seagreen}
+}
+
+@keyframes movimiento {
+    0% {top: 10rem}
+    50% {top: 5rem}
+    100%{top: 20 rem}
+}
+
+div.animado {
+    position: absolute;
+    top: 10rem;
+    left:10rem;
+    width: 20%;
+    height: 20vh;
+    border: 1px solid;
+    animation: 
+        colores 5s linear 1s infinite,
+        movimiento 5s linear 1s infinite;
+    /* animation-name: colores;
+    animation-duration: 5s;
+    animation-delay: 1s;
+    animation-direction: reverse;
+    animation-iteration-count: infinite */
+}
