@@ -1,0 +1,4 @@
+{
+    "title": "Página 3 - JSON",
+    "content": "Esta es la página 3 cargada por AJAX, sin refrescar la página y cambiando la url para que pueda compartirse y que siempre cargue este contenido."
+}
