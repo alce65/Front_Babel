@@ -12,8 +12,8 @@
 		var start = new Date();
 		console.log("start: " + (start));
 		var workerStarted = null;
-		var worker = new Worker("primos.js");
-		// var worker = new Worker("primosSpeed.js");
+		// var worker = new Worker("primos.js");
+		var worker = new Worker("primosSpeed.js");
 		worker.onmessage = function (event) {
 			if (!workerStarted) {
 				workerStarted = new Date()
