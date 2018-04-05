@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Eduard Tomàs">
+	<title>Ejemplos de IndexedDB</title>
+	<script src="js/Beer.js"></script>
+	<script src="js/idb05.js"></script>
+</head>
+<body>
+	<h1>Abrir Database</h1>
+	<div id="msg"></div>
+	<script>
+		var msg = document.getElementById("msg");
+		var db = idb.open( {
+			name: 'boot-camp',
+			version: 3,
+			error: function(evt) {
+				console.log(evt);
+				msg.innerHTML = "Error abriendo BBDD " + this.error.message;
+			},
+			success: function(evt) {
+				msg.innerHTML = "BBDD abierta OK -  " + this.name;
+				addData();
+			},
+			upgrade: function(evt) {
+				console.log(this);
+				var store = this.createObjectStore("beers", {keyPath: 'name'});
+				console.log('store beers created');
+
+			}
+		});
+
+		function addData() {
+			var tx = db.getTxOnObjectStore({
+				name: 'beers',
+				mode: 'readwrite',
+				action: function(store) {
+					var beers = [];
+					beers.push(new Beer('Voll Damm', 'Damm', 7.4));
+					beers.push(new Beer('Estrella Damm', 'Damm', 4.5));
+					beers.push(new Beer('San Miguel', 'M&M', 4.2));
+					beers.push(new Beer('Mahou 5*', 'M&M', 4.6));
+					beers.push(new Beer('Punk IPA', 'Brewdog', 5.2));
+
+					beers.map(b => {
+						var req = store.add(b);
+						req.onsuccess = function(evt) {
+							msg.innerHTML += "<br />Cerveza " + b.name + " añadida";
+						};
+						/*
+						req.onerror = function(evt) {
+							msg.innerHTML += "<br />Error en req de cerveza " + b.name + " " + evt.target.error.message;
+						};
+						*/
+					})
+
+				},
+				success: function(event) {
+					msg.innerHTML += "<br />Cervezas añadidas!";
+				},
+				error: function(event) {
+					msg.innerHTML += "<br />Error en tx - " + event.target.error.message;
+					console.log(event);
+				}
+			})
+		}
+
+
+
+
+	</script>
+</body>
+</html>

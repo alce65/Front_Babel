@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Eduard Tomàs">
+	<title>Ejemplos de IndexedDB</title>
+	<script src="js/idb01.js"></script>
+</head>
+<body>
+	<h1>Detectando IndexedDb</h1>
+	<div id="msg"></div>
+
+	<script>
+		var msg = document.getElementById("msg");
+		if (idb.exists()) {
+			msg.innerHTML ="Excelente! Tienes IndexedDb!";
+		}
+		else {
+			msg	.innerHTML ="NO tienes IndexedDb! :(";	
+		}
+	</script>
+</body>
+</html>

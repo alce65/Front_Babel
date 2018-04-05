@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Eduard Tomàs">
+	<title>Ejemplos de IndexedDB</title>
+	<script src="js/idb04.js"></script>
+</head>
+<body>
+	<h1>Abrir Database</h1>
+	<div id="msg"></div>
+
+	<script>
+		var msg = document.getElementById("msg");
+		var db = idb.open( {
+			name: 'boot-camp',
+			version: 2,
+			error: function(evt) {
+				console.log(evt);
+				msg.innerHTML = "Error abriendo BBDD " + this.error.message;
+			},
+			success: function(evt) {
+				msg.innerHTML = "BBDD abierta OK -  " + this.name;
+				console.log(evt.target.result)
+			},
+			upgrade: function(evt) {
+				console.log(this);
+				var store = this.createObjectStore("beers", {keyPath: 'name'});
+				console.log('store beers created');
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Eduard Tomàs">
+	<title>Ejemplos de IndexedDB</title>
+</head>
+<body>
+	<h1>Borrar Database</h1>
+	<div id="msg"></div>
+
+	<script>
+		var req = indexedDB.deleteDatabase("boot-camp");
+		req.onsuccess = function () {
+		    console.log("BBDD Eliminada!!");
+		};
+		req.onerror = function (evt) {
+		    console.log("ERROR borrando BBDD " + evt.target.error.message);
+		};
+
+
+	</script>
+</body>
+</html>

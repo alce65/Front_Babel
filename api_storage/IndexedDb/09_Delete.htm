@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Eduard Tomàs">
+	<title>Ejemplos de IndexedDB</title>
+	<script src="js/Beer.js"></script>
+	<script src="js/idb09.js"></script>
+</head>
+<body>
+	<h1>Create - Read/Iterate/Search/Delete</h1>
+	<div id="msg"></div>
+	<hr />
+
+	Nombre: <input type="text" id="txtName" /> <br />
+	Cervecería: <input type="text" id="txtBrewery" /> <br/>
+	Abv: <input type="number" id="txtAbv" /><br />
+	<input type="button" id="btnAdd" value="Añadir"  disabled /> <br />
+	<input type="button" id="btnSearch" value="Buscar"  disabled /> <br />
+	<input type="button" id="btnIterate" value="Listar"  disabled /> <br />
+	<input type="button" id="btnSearchBrewery" value="Buscar (Cervecería)"  disabled /> <br />
+	<input type="button" id="btnDelete" value="Borrar (clave)"  disabled /> <br />
+	<div id="list"></div>
+	<script>
+		var msg = document.getElementById("msg");
+		var db = idb.open( {
+			name: 'boot-camp',
+			version: 4,
+			error: function(evt) {
+				console.log(evt);
+				msg.innerHTML = "Error abriendo BBDD " + this.error.message;
+			},
+			success: function(evt) {
+				msg.innerHTML = "BBDD abierta OK -  " + this.name;
+				document.getElementById("btnAdd").disabled = false;
+				document.getElementById("btnAdd").addEventListener("click", addBeer, false);
+				document.getElementById("btnSearch").disabled = false;
+				document.getElementById("btnSearch").addEventListener("click", searchBeer, false);
+				document.getElementById("btnIterate").disabled = false;
+				document.getElementById("btnIterate").addEventListener("click", listBeers, false);		
+				document.getElementById("btnSearchBrewery").disabled = false;
+				document.getElementById("btnSearchBrewery").addEventListener("click", searchBeerBrewery, false);
+				document.getElementById("btnDelete").disabled = false;
+				document.getElementById("btnDelete").addEventListener("click", deleteBeer, false);
+
+			},
+			upgrade: function(evt) {
+				console.log(evt);
+				if (!this.hasObjectStore("beers")) {
+					var store = this.createObjectStore("beers", {keyPath: 'name'});
+				}
+				var store =  evt.currentTarget.transaction.objectStore("beers");
+				store.createIndex("brewery", "brewery", {unique: false});
+				
+				console.log('store beers created');
+			}
+		});
+
+
+		function addBeer() {
+			msg.innerHTML = "";
+
+			var name = document.getElementById("txtName").value;
+			var brewery = document.getElementById("txtBrewery").value;
+			var abv = document.getElementById("txtAbv").value;
+
+			var tx = db.getTxOnObjectStore({
+				name: 'beers',
+				mode: 'readwrite',
+				action: function(store) {
+					var b = new Beer(name, brewery, abv);
+					var req = store.add(b);
+					req.onsuccess = function(evt) {
+						msg.innerHTML += "<br />Cerveza " + b.name + " añadida";
+					};
+
+				},
+				success: function(event) {
+					msg.innerHTML += "<br />Tx finalizada con éxito";
+				},
+				error: function(event) {
+					msg.innerHTML += "<br />Error en tx - " + event.target.error.message;
+					console.log(event);
+				}
+			})
+		}
+
+		function searchBeer() {
+			var name = document.getElementById("txtName").value;
+			db.getByKey({
+				name: 'beers',
+				key: name,
+				success: function(item) {
+					if (item) {
+						console.log(item);
+					}
+					else {
+						console.log ('No encontrado');
+					}
+				}
+			})
+		}
+
+		function listBeers() {
+			var list = document.getElementById("list");
+			list.innerHTML = "";
+			db.iterate({
+				name:'beers',
+				each: function(item, c) {
+					list.innerHTML += item.name;
+					list.innerHTML += "<br />"
+				}
+			});
+		}
+
+		function searchBeerBrewery() {
+			var list = document.getElementById("list");
+			var brewery = document.getElementById("txtBrewery").value;
+			list.innerHTML = "";
+			db.iterate({
+				name:'beers',
+				index: 'brewery',
+				range: IDBKeyRange.only(brewery),
+				each: function(item, c) {
+					list.innerHTML += item.name;
+					list.innerHTML += "<br />"
+				}
+			});					
+		}
+
+		function deleteBeer() {
+			var name = document.getElementById("txtName").value;
+			db.deleteByKey({
+				name:'beers',
+				key: name,
+				success: function(evt) {
+					alert('Deleted!');
+				}
+			});
+		}
+
+	</script>
+</body>
+</html>
