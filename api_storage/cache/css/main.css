@@ -1,0 +1,10 @@
+.conexionStatus {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: #F00;
+}
+.online .conexionStatus {
+    background: #0F0;
+}

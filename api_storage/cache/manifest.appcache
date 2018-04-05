@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# v.1.0.2
+index.html
+
+CACHE:
+js/main.js
+css/main.css
+
+NETWORK:
+*
+
+FALLBACK:
+images/avatars/images/avatar-default.png
