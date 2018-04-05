@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>CursoWebRTC</title>
+		<link rel="stylesheet" href="./static/css/style.css">
+		<script src="./static/js/CursoWebRTC.Ej1.js"></script>
+	</head>
+
+	<body onload="CursoWebRTC.Ej1.prepare()">
+		<div class="step">
+			<h1>1. GetUserMedia, Canvas & Images</h1>
+			<div id="controls">
+				<input type="button" value="Init" onclick="CursoWebRTC.Ej1.init()">
+				<input type="button" value="Take photo" onclick="CursoWebRTC.Ej1.takePhoto()">
+				<input type="button" value="Canvas2Image" onclick="CursoWebRTC.Ej1.canvasToImage()">				
+				<input type="button" value="Video2Canvas" onclick="CursoWebRTC.Ej1.videoToCanvas()">
+				<input type="button" value="Stop Video2Canvas" onclick="CursoWebRTC.Ej1.stopVideoToCanvas()">
+				<input type="button" value="Stop" onclick="CursoWebRTC.Ej1.stop()">
+			</div>
+
+			<video muted autoplay id="myvideo"></video>
+			<canvas id="mycanvas" width=320 height=240></canvas>
+			<img id="myphoto">
+		</div>
+
+		<div class="step">
+			<h1>2. Applying effects</h1>
+			<div id="controls">
+				<input type="button" value="Greyscale" onclick="CursoWebRTC.Ej1.effectCanvas(true)">
+				<input type="button" value="Stop effect" onclick="CursoWebRTC.Ej1.stopVideoToCanvas()">
+			</div>
+			<canvas id="myeffectcanvas" width=320 height=240></canvas>
+		</div>
+
+		<div class="step">
+			<h1>3. Screen Sharing</h1>
+			<div id="controls">
+				<input type="button" value="Init" onclick="CursoWebRTC.Ej1.initScreenSharing()">
+				<input type="button" value="Stop" onclick="CursoWebRTC.Ej1.stopScreenSharing()">
+			</div>
+			<video muted autoplay id="myscreen"></video>
+		</div>		
+	</body>
+</html>
