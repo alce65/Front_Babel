@@ -1,0 +1,35 @@
+﻿<!DOCTYPE ht
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Reproductor de Video</title>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<link rel="stylesheet" href="style.css">
+	<script src="./app.js"></script>
+</head>
+
+<body>
+	<h1>Reproductor de vídeo</h1>
+	<section id="reproductor">
+		<video id="medio" width="720" height="400">
+			<source src="../assets/Shadowrun.webm" type="video/webm"> </source>
+			<source src="../assets/Shadowrun.mp4" type="video/mp4"> </source>
+		</video>
+		<nav>
+			<div id="botones">
+				<input type="button" id="reproducir" value="Reproducir">
+			</div>
+			<div id="barra">
+				<div id="progreso"></div>
+			</div>
+		</nav>
+	</section>
+	<div id="mensajes"> </div>
+</body>
+</html>

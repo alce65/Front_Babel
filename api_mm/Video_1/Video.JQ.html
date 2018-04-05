@@ -1,0 +1,124 @@
+﻿<!DOCTYPE ht
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Reproductor de Video</title>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		body{  text-align: center;}
+		header, section, footer, aside, nav, article, figure, figcaption, hgroup{display : block;}
+		nav{margin: 5px 0px;
+			height:20px;}
+		#reproductor{
+			width: 720px;
+			margin: 20px auto;
+			padding: 5px;
+			background: #999999;
+			border: 1px solid #666666;
+			border-radius: 10px;}
+		#botones{
+			float: left;
+			width: 99px;
+			height: 20px;}
+		#barra{
+			position: relative;
+			float: left;
+			width: 600px;
+			height: 16px;
+			padding: 2px;
+			border: 1px solid #CCCCCC;
+			background: #EEEEEE;}
+		#progreso{
+			position: absolute;
+			width: 0px;
+			 height: 16px;
+			 background: rgba(0,0,150,.2);}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>
+		$(function () {
+		    const maximo = 600; // ancho total en px de la barra de progreso, definido en css 
+		    var oMedio = $('#medio')[0]; //objeto video;
+		    //var oMedio = $('#medio') //ERROR: JQuery no soporta <vidoe> pero almacena los datos del nodo DOM como elelmento [0] del array que crea
+			var oReproducir = $('#reproducir'); //objeto boton reproducir
+			var oBarra = $('#barra'); // objeto barra de progreso
+			var oProgreso = $('#progreso'); // objeto "progreso": el interior coloreado de la barra de progreso
+
+			oReproducir.click(function () {
+
+				if(!oMedio.paused && !oMedio.ended) {
+					//paramos el vídeo
+					 oMedio.pause();
+					 oReproducir.val('Reproducir');
+					  window.clearInterval(bucle);
+				 }else{
+					 //reproducimos el video
+					 oMedio.play();
+					 oReproducir.val('Pausa');
+					 var bucle = window.setInterval(estado, 1000);
+					 // cada segundo ejecuto la función estado, que pintará la barra de estado
+					 // bucle corresponde al identificator del setInterval
+				 }	 
+			}); // fin de on click boton
+
+			oBarra.click(function (e) {
+				if(!oMedio.paused && !oMedio.ended) {
+					 //si el video se esta reproduciendo
+					 var ratonX = e.pageX - $('#barra')[0].offsetLeft;
+					 // valor en x de la barra: x(raton) - x(inicio barra) 
+					 var nuevoTiempo = ratonX * oMedio.duration/maximo;
+					 // valor x en segundos  x * t / x(maximo)
+					 oMedio.currentTime = nuevoTiempo;
+					 // cambio de tiempo del video
+					 oProgreso.css('width', ratonX + 'px');
+					 // cambio de aspecto de la barra
+				}
+			}); // fin de on click barra
+
+			function estado() {
+			    if (!oMedio.ended) {
+			        // si continua la reproducción
+			        var total = parseInt(oMedio.currentTime * maximo / oMedio.duration);
+			        //paso el curretTime a pixels
+			        oProgreso.css('width', total + 'px');
+			        // actualizo el aspecto de la barra
+			    } else {
+			        oProgreso.css('width', '0px');
+			        // actualizo el aspecto de la barra
+			        oReproducir.val() = 'Reproducir';
+			        // actualizo el aspecto del boton
+			        window.clearInterval(bucle);
+			        // termino con la ejecución repetida de la función
+			    }
+			}
+
+		}); // fin de ready()
+		
+	</script>
+</head>
+
+<body>
+	<h1>Reproductor de vídeo</h1>
+	<section id="reproductor">
+		<video id="medio" width="720" height="400">
+			<source src="../assets/Shadowrun.webm" type="video/webm"> </source>
+			<source src="../assets/Shadowrun.mp4" type="video/mp4"> </source>
+		</video>
+		<nav>
+			<div id="botones">
+				<input type="button" id="reproducir" value="Reproducir">
+			</div>
+			<div id="barra">
+				<div id="progreso"></div>
+			</div>
+		</nav>
+	</section>
+	<div id="mensajes"> </div>
+</body>
+</html>
