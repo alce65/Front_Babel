@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas - Ejercicio 4</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		h1{text-align:center; font-size:50px;}
+		canvas{margin: 0% 15%;}	
+		div{font-size: 40px;}
+        form {
+            width: 550px;
+            margin: 0px 15%;
+        }
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		$(function () {
+			canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+		}); // Fin de ready
+	
+	
+		function canvasApp(){
+			
+			var oCanvas = $('#miCanvas')[0];
+			// opción válida en JQuery
+			// var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+	
+			if (!oCanvas && !oCanvas.getContext) {
+				return; }
+			else {		
+				var c = oCanvas.getContext('2d');
+				if (!c) {
+					return;
+				} //Fin de la comprobación del contexto
+			} // Fin de la comprobación del Canvas
+	
+			// Manejadores de eventos de los controles asociados al canvas
+
+ 			
+			formElements = {};
+			formElements["fillOrStroke"] = document.getElementById("fillOrStroke");
+			formElements["nunCuadrados"] = document.getElementById("nunCuadrados");
+			formElements["anguloGiro"] = document.getElementById("anguloGiro");
+			formElements["cuadFillColor"] = document.getElementById("cuadFillColor");
+			formElements["cuadStrokeColor"] = document.getElementById("cuadStrokeColor");
+
+
+			for (var element in formElements) {
+			    formElements[element].addEventListener('change', drawScreen, false);
+			}
+
+			const SIZE = 150;
+			const X = 150;
+			const Y = 150;
+			drawScreen();
+
+			function drawScreen (){
+				
+				//Background
+				c.fillStyle = "#ffffff";
+				c.fillRect(0, 0, oCanvas.width, oCanvas.height);
+
+				//Box
+				c.strokeStyle = "#000000";
+				c.strokeRect(5, 5, oCanvas.width - 10, oCanvas.height - 10);
+			
+				c.strokeStyle = formElements["cuadFillColor"].value; 
+				c.fillStyle = formElements["cuadStrokeColor"].value;
+				c.save();
+				c.translate(X + SIZE / 2, Y + SIZE / 2);
+
+				var num = formElements["nunCuadrados"].value;
+				var angle = formElements["anguloGiro"].value;
+
+				switch (formElements["fillOrStroke"].value) {
+					case "fill":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.fillRect(-SIZE / 2, -SIZE / 2,
+							               SIZE, SIZE);
+							 c.rotate(angle);
+
+						}	
+						break;
+					case "stroke":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.strokeRect(-SIZE / 2, -SIZE / 2,
+							               SIZE, SIZE);
+							c.rotate(angle);
+						}	
+						break;
+					case "both":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.fillRect(-SIZE / 2, -SIZE / 2,
+							               SIZE, SIZE);
+							 c.strokeRect(-SIZE / 2, -SIZE / 2,
+							               SIZE, SIZE);
+							c.rotate(angle);
+						}	
+						break;
+				}
+				 c.restore();
+			} // Fin de drawScreen
+				 			
+		}; // Fin de canvaaApp
+
+	</script>
+</head>
+
+<body>
+	
+	<h1> Canvas dinámico</h1><hr>
+
+	<div><canvas id="miCanvas" width="700" height="400"> </canvas> </div>
+	
+		<form>
+		<fieldset>
+			<legend>Cuadrado Relleno (Fill) ó Borde (Stroke)</legend>
+			<label>
+				<span class="label">Técnica de dibujo :</span>  
+				<select id="fillOrStroke">
+					<option value="stroke">Borde (stroke)</option>
+					<option value="fill">Relleno (fill)</option>
+					<option value="both">Ambos</option>
+				</select>
+			</label>
+		</fieldset>		
+		<fieldset>
+			<legend>Características de la repetición</legend>
+			    <label>Nº de cuadrados:</label>  
+				<input type="range" id="nunCuadrados"
+						min="0" max="50" step="1" value="10">
+			<label>Ángulo de giro:</label>  
+			<input type="range" id="anguloGiro"
+						min="0" max="10" step="1" value="2">
+		</fieldset>
+		<fieldset>
+			<legend>Colores de los cuadrados</legend>
+			<label>
+				<span class="label">Color de fondo:</span>  
+				<input type="color" id="cuadFillColor" value="#FF0000">
+			</label>
+			<label>
+				<span class="label">Color del borde:</span>  
+				<input type="color" id="cuadStrokeColor" value="#FF6600">
+			</label>
+		</fieldset>
+	</form>	
+</body>
+
+</html>

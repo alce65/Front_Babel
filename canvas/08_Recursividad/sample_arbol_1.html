@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Arbol en el canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+	$(function () {
+	    canvasApp();
+	}); // Fin de ready()
+
+	function canvasApp() {
+
+	    function drawBranch(x, y, l, direction) {
+	        var x2 = x + l * direction;
+	        var y2 = y - l;
+	        drawLine(x, y, x2, y2);
+	        if (l > minL) {
+	            drawBranch(x2, y2, l * yScala, xScala);
+	            drawBranch(x2, y2, l * yScala, -xScala);
+	        }
+	    } // Fin de la función
+
+	    function drawLine(x1, y1, x2, y2) {
+	        c.beginPath();
+	        c.moveTo(x1, y1);
+	        c.lineTo(x2, y2);
+	        c.stroke();
+	    } // Fin de la función
+
+	    var miCanvas = $('#miCanvas')[0];
+	    var c = miCanvas.getContext('2d');
+
+	    var minL = 5; // máximo de reducción
+	    var yScala = 0.8; //% del nivel anterior
+	    var xScala = 0.7; // tan del ángulo
+
+	    var w = c.canvas.width;
+	    var h = c.canvas.height;
+
+	    drawBranch(w / 2, h, 100, 0);
+
+	} // Fin de la función canvasApp
+		
+	</script>
+</head>
+
+<body>
+	<h1>Árbol en el Canvas 01</h1>
+	<div><canvas id="miCanvas" width="700" height="300"> </canvas> </div>
+	
+</body>
+</html>

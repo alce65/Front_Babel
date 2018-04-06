@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas - Ejercicio 4</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		h1{text-align:center; font-size:50px;}
+		canvas{margin: 0% 15%;}	
+		div{font-size: 40px;}
+        form {
+            width: 550px;
+            margin: 0px 15%;
+        }
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		$(function () {
+			canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+		}); // Fin de ready
+	
+	
+		function canvasApp(){
+			
+			var oCanvas = $('#miCanvas')[0];
+			// opción válida en JQuery
+			// var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+	
+			if (!oCanvas && !oCanvas.getContext) {
+				return; }
+			else {		
+				var c = oCanvas.getContext('2d');
+				if (!c) {
+					return;
+				} //Fin de la comprobación del contexto
+			} // Fin de la comprobación del Canvas
+	
+			// Manejadores de eventos de los controles asociados al canvas
+
+ 			
+			var formElement2 = document.getElementById("fillOrStroke");
+			formElement2.addEventListener("change", fillOrStrokeChanged, false);
+			//formElement2.onchange = fillOrStrokeChanged;
+			formElement = document.getElementById("nunCuadrados");
+			formElement.addEventListener('change', nunCuadradosChanged, false);
+			formElement = document.getElementById("anguloGiro");
+			formElement.addEventListener('change', anguloGiroChanged, false);
+			formElement = document.getElementById("cuadFillColor");
+			formElement.addEventListener('change', cuadFillColorChanged, false);
+			formElement = document.getElementById("cuadStrokeColor");
+			formElement.addEventListener('change', cuadStrokeColorChanged, false);
+
+			//fillOrStroke
+			
+
+			var fillOrStroke = "stroke";
+			var colorBorde = "#FF6600"; //naranja
+			//cuadFillColor
+			var colorRelleno = "#FF0000"; //rojo
+			//cuadStrokeColor
+			var angle = 0.2;
+			// definida en anguloGiro 
+			var num = 10;
+			// definida en nunCuadrados
+			var size = 150;
+			var x = 150;
+			var y = 150;
+			drawScreen();
+
+			function drawScreen (){
+				
+				//Background
+				c.fillStyle = "#ffffff";
+				c.fillRect(0, 0, oCanvas.width, oCanvas.height);
+
+				//Box
+				c.strokeStyle = "#000000";
+				c.strokeRect(5, 5, oCanvas.width - 10, oCanvas.height - 10);
+			
+				c.strokeStyle = colorBorde;
+				c.fillStyle = colorRelleno;
+				c.save();
+				c.translate(x + size / 2, y + size / 2);
+				//c.translate(150, 150);
+		
+				switch(fillOrStroke) {
+					case "fill":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.fillRect(-size / 2, -size / 2,
+							               size, size);
+							c.rotate(angle);
+						}	
+						break;
+					case "stroke":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.strokeRect(-size / 2, -size / 2,
+							               size, size);
+							//c.strokeRect(-75, -75, size, size);
+							c.rotate(angle);
+						}	
+						break;
+					case "both":
+						for (var i = 0; i < num; i = i + 1) {
+							 c.fillRect(-size / 2, -size / 2,
+							               size, size);
+							 c.strokeRect(-size / 2, -size / 2,
+							               size, size);
+							c.rotate(angle);
+						}	
+						break;
+				}
+				 c.restore();
+			} // Fin de drawScreen
+			
+			function fillOrStrokeChanged(oEvento) {
+				fillOrStroke = oEvento.target.value;
+				drawScreen();
+			} // fillOrStrokeChange
+
+			function nunCuadradosChanged(oEvento) {
+				num = oEvento.target.value;
+				drawScreen();
+			} // Fin de nunCuadradosChanges
+
+			function anguloGiroChanged(oEvento) {
+				angle = oEvento.target.value /10;
+				drawScreen();
+			} // Fin de nunCuadradosChanges
+			
+			function cuadFillColorChanged(oEvento) {
+				colorRelleno = oEvento.target.value;
+				drawScreen();
+			} //Fin de cuadFillColorChanged
+			
+			function cuadStrokeColorChanged(oEvento) {
+				colorBorde = oEvento.target.value;
+				drawScreen();
+			} // Fin de cuadStrokeColorChanged
+
+				 			
+		}; // Fin de canvaaApp
+
+	</script>
+</head>
+
+<body>
+	
+	<h1> Canvas dinámico</h1><hr>
+
+	<div><canvas id="miCanvas" width="700" height="400"> </canvas> </div>
+	
+		<form>
+		<fieldset>
+			<legend>Cuadrado Relleno (Fill) ó Borde (Stroke)</legend>
+			<label>
+				<span class="label">Técnica de dibujo :</span>  
+				<select id="fillOrStroke">
+					<option value="stroke">Borde (stroke)</option>
+					<option value="fill">Relleno (fill)</option>
+					<option value="both">Ambos</option>
+				</select>
+			</label>
+		</fieldset>		
+		<fieldset>
+			<legend>Características de la repetición</legend>
+			    <label>Nº de cuadrados:</label>  
+				<input type="range" id="nunCuadrados"
+						min="0" max="50" step="1" value="10">
+			<label>Ángulo de giro:</label>  
+			<input type="range" id="anguloGiro"
+						min="0" max="10" step="1" value="2">
+		</fieldset>
+		<fieldset>
+			<legend>Colores de los cuadrados</legend>
+			<label>
+				<span class="label">Color de fondo:</span>  
+				<input type="color" id="cuadFillColor" value="#FF0000">
+			</label>
+			<label>
+				<span class="label">Color del borde:</span>  
+				<input type="color" id="cuadStrokeColor" value="#FF6600">
+			</label>
+		</fieldset>
+	</form>	
+</body>
+
+</html>

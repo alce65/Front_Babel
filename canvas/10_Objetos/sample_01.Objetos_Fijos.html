@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>..</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+
+        // Uso de un función Constructora para crear varias instancias de un cuadrado
+        // (paso previo al ejercicio en que se animaran estos cuadrados)
+
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+	    // Función constructora de la clase Caja
+		function Caja(x, y, size) {
+		    this.x = x;
+		    this.y = y;
+		    this.size = size;
+		    this.angle = 0;
+		    this.dx = 0;
+		    this.dy = 0;
+
+		    this.stroke = function () {
+		        c.strokeRect(this.x, this.y,
+                this.size, this.size);
+		    };
+		}; // Fin de la función constructora Caja()
+
+	    //// Crear una caja
+		//var caja1 = new Caja(10, 10, 100);
+		//caja1.stroke();
+	    //// Crear una segunda caja
+		//var caja2 = new Caja(30, 30, 100);
+		//caja2.stroke();
+
+	    // Crear varias cajas de una vez
+		var cajas = [];
+		for (var i = 0; i < 3; i = i + 1) {
+		    cajas.push(new Caja(i * 30, i * 20, 100));
+		}
+	    // Hacemos que las cajas del array de objetos se creen a si mismas
+		for (var i = 0; i < cajas.length; i = i + 1) {
+		    cajas[i].stroke();
+		}
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

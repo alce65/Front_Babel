@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Cuadrados en el canvas</title>
+	<link rel="stylesheet" href="default.css">
+    <style>
+        label {
+            display: block;
+            clear: both;
+        }
+    </style>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+    
+        window.onload = function () {
+            //document.getElementById("boton").onclick = canvasApp;
+            document.getElementById("numero").onchange = canvasApp;
+            document.getElementById("size").onchange = canvasApp;
+		    canvasApp();
+		    // Aislamos los procesos del canvas en una función independiente
+	    }; // Fin de  window onload
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas	
+
+		var size = document.getElementById("size").value;
+		var offset = 20;
+		var move = size/2;
+		var n = document.getElementById("numero").value;
+		var color;
+        c.clearRect(0,0,599,599)
+		for (var i = 1; i <= n; i++) {
+		    if (i%3 == 0) { color = "rgb(0, 255, 0)"; }
+		    else if (i%2 == 0) { color = "rgb(0, 0, 255)"; }
+		    else {color = "rgb(255, 0, 0)"; }
+		    c.fillStyle = color;
+		    c.fillRect(offset, offset, size, size);
+		    offset = offset + move;
+		}
+        // Transparencias
+		//color = "rgba(255, 0, 0, 0.5)";
+		//for (i = 1; i <= n; i = i + 1) {
+		//    if (i == 2) { color = "rgba(0, 255, 0, 0.5)"; }
+		//    else if (i == 3) { color = "rgba(0, 0, 255, 0.5)"; }
+		//   c.fillStyle = color;
+		//   c.fillRect(offset + 3*move, offset, size, size);
+		//    offset = offset + move;
+		//}
+		
+		return false;
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+    <form>
+        <label>Número de cuadrados
+            <input type="number" id="numero" name="numero" min=3 max=10 value=3 />
+        </label>
+        <label>Tamaño en pixels de cada cuadrado
+            <input type="number" id="size" name="size" min="50" max="100" step="10" value="50" />
+        </label>
+        <button value="Pintar" id="boton" name="boton">Pintar</button>
+    </form>
+	<canvas width="600" height="600" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

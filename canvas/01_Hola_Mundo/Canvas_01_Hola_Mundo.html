@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Hola Mundo - Canvas</title>
+	<link rel="stylesheet" href="default.css">
+    <style>
+        canvas {margin: 2em;}
+    </style>
+	<link rel="shortcut icon" href="fav_icon.png">
+	
+	<script>
+	window.onload = canvasApp;
+		// Aislamos los procesos del canvas en una función independiente
+	
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+	    // Código del canvas
+
+		(function drawScreen() {
+		    c.fillStyle = "#0000FF";
+		    c.fillRect(0, 0, 600, 400);
+		    c.strokeStyle = "#000000";
+		    c.strokeRect(0, 0, 600, 400);
+
+		    c.fillStyle = "#FFFF00";
+		    c.font = "20px sans-serif";
+		    c.fillText("Hola, Mundo del Canvas!", 130, 180);
+		})(); // fin de la función autoejecutada que pinta en el canvas
+
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

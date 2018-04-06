@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Dibujo básico</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	
+	<style>
+		h1, canvas {margin-left: 10%}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		c.fillStar = function (x, y, size) {
+		    c.beginPath();
+		    c.moveTo(x, y);
+		    c.lineTo(x + size, y);
+		    c.lineTo(x + size * 0.15, y + size * 0.5);
+		    c.lineTo(x + size / 2, y - size * 0.4);
+		    c.lineTo(x + size * 0.85, y + size * 0.5);
+		    c.lineTo(x, y);
+		    c.fill();
+		}
+
+
+		//un path de lineas quebradas y discontinuas dentro de un cuadrado
+		c.strokeRect(20, 20, 170, 170);
+		c.beginPath();
+	    c.moveTo(50, 50)
+	    c.lineTo(90, 100)
+	    c.lineTo(50, 150)
+	    c.moveTo(150, 50)
+	    c.lineTo(110, 100)
+	    c.lineTo(150, 150)
+	    c.stroke();
+
+        // un path cerrado del que dibujamos su contorno
+		c.beginPath();
+		c.strokeStyle = "red";
+		c.moveTo(20,250);
+		c.lineTo(40, 350);
+		c.lineTo(70, 200);
+		c.lineTo(100, 400);
+		c.lineTo(140, 250);
+		c.closePath();
+		c.stroke();	
+		
+        // un path cerrado (un triángulo)
+		c.beginPath();
+		// comprobar el efecto de reiniciar o no el path	
+		c.moveTo(350,50);
+		c.lineTo(300,150);
+		c.lineTo(400,150);
+		c.closePath();
+		//igual que c.lineTo(350,50);
+		c.fill();	
+		 
+        // Una estrella
+		c.fillStar(275, 300, 150);
+
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas: dibujo básico</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

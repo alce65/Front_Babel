@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Colors en el canvas..</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+		// Código del canvas
+		c.cuadrado = function (x, y, l, isRelleno) {
+		    if (isRelleno) { this.fillRect(x, y, l, l); }
+		    else { this.strokeRect(x, y, l, l); }
+		};
+		var offset = 10, size = 50;
+		c.fillStyle = "red";
+		c.cuadrado(offset + (0 * (offset + size)), offset, size, true);
+		c.fillStyle = "darkred";
+		c.cuadrado(offset + (1 * (offset + size)), offset, size, true);
+		c.fillStyle = "#00FF00";
+		c.cuadrado(offset + (2 * (offset + size)), offset, size, true);
+		c.fillStyle = "#299029";
+		c.cuadrado(offset + (3 * (offset + size)), offset, size, true);
+		c.fillStyle = "rgba(0, 0, 255, 0.50)";
+		c.cuadrado(offset + (4 * (offset + size)), offset, size, true);
+		c.fillStyle = "rgba(0, 0, 255, 0.25)";
+		c.cuadrado(offset + (5 * (offset + size)), offset, size, true);
+		c.fillStyle = "hsl(35,84%,62%)";
+		c.cuadrado(offset + (6 * (offset + size)), offset, size, true);
+		c.fillStyle = "hsl(35,40%,62%)";
+		c.cuadrado(offset + (7 * (offset + size)), offset, size, true);	
+	} // Fin de la función CanvasApp		
+	</script>							
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600px" height="100px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+    <p>Ejemplo del empleo de los siguientes colores:</p>
+    <ul>
+        <li>c.fillStyle = "red"</li>
+        <li>c.fillStyle = "darkred"</li>
+        <li>c.fillStyle = "#00FF00"</li>
+        <li>c.fillStyle = "#299029"</li>
+        <li>c.fillStyle = "rgba(0, 0, 255, 0.50)"</li>
+        <li>c.fillStyle = "rgba(0, 0, 255, 0.25)"</li>
+        <li>c.fillStyle = "hsl(35,84%,62%)"</li>
+        <li>c.fillStyle = "hsl(35,40%,62%)"</li>   
+    </ul>
+
+</body>
+</html>

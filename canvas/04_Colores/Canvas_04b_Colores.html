@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Distorsion de colores</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+
+	$(function () {
+	    var c;
+	    var size = document.querySelector("[name=size]");
+	    var time = document.querySelector("[name=time]");
+	    size.addEventListener("change", canvasInit, false);
+	    time.addEventListener("change", canvasInit, false);
+	    canvasApp();
+	    canvasInit();
+		// Aislamos los procesos del canvas en una función independiente
+
+		
+	    function canvasApp () {
+		
+		    var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		    // var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		    if (!oCanvas && !oCanvas.getContext) {
+			    return; }
+		    else {		
+			    c = oCanvas.getContext('2d');
+			    if (!c) {
+				    return;
+			    } //Fin de la comprobación del contexto
+		    } // Fin de la comprobación del Canvas		    
+				
+	    } // Fin de la función CanvasApp
+
+	    function canvasInit() {
+	        clearTimeout(temp);
+	        console.log(+size.value);
+	        console.log(+time.value);
+	        temp = setInterval(function () { cuadradosAleatorios(c, +size.value) }, +time.value);
+	    }
+
+	}); // Fin de ready		
+
+	function randomRGBA() {
+		var r = randInt(255);
+		var g = randInt(255);
+		var b = randInt(255);
+		var a = Math.random();
+		var rgba = [r,g,b,a].join(",");
+		return "rgba(" + rgba + ")";
+	}
+	function randInt(limit) {
+		var x = Math.random() * limit;
+		return Math.floor(x);
+	}
+	function cuadradosAleatorios(c, size){
+		for(var i=0; i<600; i+=size){
+			for(var j=0; j<400; j+=size){
+				c.fillStyle = randomRGBA();
+				c.fillRect(i,j,size,size);
+			}
+		}
+	} 
+		
+	
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+    <form>
+        <p>
+            <label>Tamaño de cuadro (2-6px)</label>
+            <input type="range" min="2" max="6" value="5" name="size" />
+        </p>
+        <p>
+            <label>Tiempo de refresco (10-100 ms)</label>
+            <input type="range" min="10" max="100" step="10" value="50" name="time" />
+        </p>
+    </form>
+</body>
+</html>

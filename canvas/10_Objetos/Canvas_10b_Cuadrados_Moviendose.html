@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Animación - Objetos</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+	    // Función constructora de la clase Caja
+		function Caja(x, y, size, a, dx, dy, da) {
+		    this.x = x;
+		    this.y = y;
+		    this.size = size;
+		    this.angle = a;
+		    this.dx = dx;
+		    this.dy = dy;
+		    this.da = da;
+
+		}; // Fin de la función constructora Caja()
+
+		Caja.prototype.update = function () {
+
+		    // modifica los valores de posición y ángulo
+		    // en función de las propiedades del propio objeto
+		    this.angle += this.da;
+		    this.x += this.dx;
+		    this.y += this.dy;
+
+		    // Rebotes en los bordes
+		    if (this.x < 0 ||
+                this.x + this.size > w) {
+		        this.dx = -this.dx;
+		        this.da = -this.da;
+		    }
+		    if (this.y < 0 ||
+                this.y + this.size > h) {
+		        this.dy = -this.dy;
+		        this.da = -this.da;
+		    }
+
+		    this.pintar();
+		};
+
+		Caja.prototype.pintar = function () {
+		    c.save();
+		    var x = this.x + this.size / 2; // Calcula la x del centro de la caja
+		    var y = this.y + this.size / 2; // Calcula la y del centro de la caja
+		    c.translate(x, y);  // Mueve el origen de coordenadas
+		    c.rotate(this.angle);  //Gira la caja alrededor de su centro 
+		    c.strokeRect(-this.size / 2, -this.size / 2,
+                         this.size, this.size);  //Dibuja
+		    c.restore();
+		};
+
+	    // valores de la animación
+		var tiempo = 50; // In milliseconds
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+		var cmTID;
+
+	    // Crear varias cajas de una vez
+		var cajas = [];
+		var s = 80;
+		for (var i = 0; i < 3; i++) {
+		    // aleatorizamos todos los valores iniciales
+            // con los que se instancia cada uno de los objetos
+		    var x = Math.random() * (w - s);
+		    var y = Math.random() * (h - s);
+		    var a = Math.random() * 2 - 1;
+		    var dx = Math.random() * 2 - 1;
+		    var dy = Math.random() * 2 - 1;
+		    var da = 0.1 * (Math.random() * 2 - 1);
+		    cajas.push(new Caja(x, y, s, a, dx, dy, da));
+		}
+
+		drawCanvas();
+
+		function drawCanvas() {
+		    c.clearRect(0, 0, w, h);
+		    // Hacemos que las cajas del array de objetos se creen a si mismas
+		    for (var i = 0; i < cajas.length; i = i + 1) {
+		        cajas[i].update();
+		        //cado objeto tiene un método que "actualiza su posición" antes de pintarse método stroke
+		    }
+		    clearTimeout(cmTID);
+		    cmTID = setTimeout(drawCanvas, tiempo);
+		}
+
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

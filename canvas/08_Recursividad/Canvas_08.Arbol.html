@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Árbol en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+	$(function () {
+
+		function drawBranch(l, direction) {
+		    c.save();
+            c.fillStyle = "DarkRed"
+			c.fillRect(-1, 0, 4, -l);
+			c.translate(0, -l);
+			if (l > 5) {
+			    drawBranch(l * 0.8, -direction);
+			    c.rotate((0.5 + 0.3 * Math.random()) * direction);
+                    //);
+			    drawBranch(l * 0.7, -direction);
+			} else {
+			    c.fillStyle = "green";
+			    c.fillRect(-2, -2, 4, 4);
+			}
+			c.restore();
+		}
+
+		var miCanvas = $('#miCanvas')[0]; 
+		var c = miCanvas.getContext('2d'); 
+		var imgNave = new Image();
+		imgNave.src = "puesta_sol_kruger.jpg";
+
+		imgNave.onload = function () {
+		    c.drawImage(imgNave, 0, 0);
+		    c.translate(250, 500);
+		    drawBranch(100, 1);
+		};
+		
+	}); // Fin de ready()
+	</script>
+</head>
+
+<body>
+	<h1>Árbol en el Canvas 02</h1>
+	<div><canvas id="miCanvas" width="600" height="450"> </canvas> </div>
+	
+</body>
+</html>

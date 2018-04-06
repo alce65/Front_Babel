@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Dibujo básico</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	
+	<style>
+		h1, canvas {margin-left: 10%}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+
+		c.circulo = function (x, y, r, isRelleno) {
+		    this.beginPath();
+		    this.arc(x, y, r, 0, 2 * Math.PI)
+		    if (isRelleno) { this.fill(); }
+		    else { this.stroke(); }
+		    this.closePath()
+		};
+
+
+		//c.fillRect(50,50,100,100);
+		//c.strokeRect(20,20,150,150);
+		
+		c.beginPath();
+		c.strokeStyle = "red";
+		c.moveTo(20,250);
+		c.bezierCurveTo(70, 100, 90, 400, 140, 250);
+		c.stroke();	
+		c.closePath();
+		
+		c.beginPath();
+		c.moveTo(50,50);
+		c.quadraticCurveTo(100, 100, 150,50);
+		c.quadraticCurveTo(100, 80, 50,50);
+				//c.closePath();
+		c.stroke();
+		c.fill();	
+
+		
+		c.circulo(100, 430, 60, true);
+
+		 
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas: dibujo básico</h1>
+	<canvas width="600px" height="500px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

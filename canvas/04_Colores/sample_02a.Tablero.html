@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas 07</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+	$(function () {
+
+	var miCanvas = $('#miCanvas')[0]; 
+	var c = miCanvas.getContext('2d'); 
+
+	var size = 50;
+	
+	for (var i = 0; i < 1; i = i + 1) {
+	  for (var j = 0; j < 1; j = j + 1) {
+	  	// cada vuelta, 2 cuadrados blancos y dos negros
+	    var x = i * 2 * size;
+	    var y = j * 2 * size;
+	    fillSquare(x, y, size); // cuadrado relleno 1
+	    x = x + size;
+	    y = y + size;
+	    fillSquare(x, y, size); // cuadrado relleno 2
+	  }
+	}
+
+	function fillSquare(x, y, s) {
+	  c.fillRect(x, y, s, s);
+	}
+		
+	}); // Fin de ready()
+	</script>
+</head>
+
+<body>
+	<h1>Canvas 07</h1>
+	<div><canvas id="miCanvas" width="700" height="700"> </canvas> </div>
+	
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Imágenes en el canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		canvas {border: 2px solid black}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas1 = document.getElementById('canvas1'); // JavaScript sin JQuery
+		var oCanvas2 = document.getElementById('canvas2'); // JavaScript sin JQuery
+		var oCanvas3 = document.getElementById('canvas3'); // JavaScript sin JQuery
+		var oCanvas4 = document.getElementById('canvas4'); // JavaScript sin JQuery
+		var oCanvas5 = document.getElementById('canvas5'); // JavaScript sin JQuery
+		
+		var img = new Image();
+		img.src = 'blade_runner.jpeg';
+
+		
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if ((!oCanvas1 && !oCanvas1.getContext) ||
+			(!oCanvas2 && !oCanvas2.getContext) ||
+			(!oCanvas3 && !oCanvas3.getContext) ||
+			(!oCanvas4 && !oCanvas4.getContext) ||
+			(!oCanvas5 && !oCanvas5.getContext)){
+			return; }
+		else {		
+			var c1 = oCanvas1.getContext('2d');
+			var c2 = oCanvas2.getContext('2d');
+			var c3 = oCanvas3.getContext('2d');			
+			var c4 = oCanvas4.getContext('2d');			
+			var c5 = oCanvas5.getContext('2d');			
+			if (!c1 || !c2 || !c3 || !c4 || !c5) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		// Código del canvas
+			$('#datos1').html("salida1");
+			img.onload = function(){	
+			    var salida1 = " Las dimensiones de la imagen son " + img.width + " x " + img.height;
+				$('#datos1').html(salida1);		
+				c1.drawImage(img, 10, 10);
+				c2.drawImage(img, 10, 10);
+				var w = 380
+				var h = w * img.height / img.width;
+				document.getElementById("w").innerHTML = w
+				document.getElementById("h").innerHTML = h.toFixed(2);
+				c3.drawImage(img, 10, 10, w, h);				
+				c4.drawImage(img, 100, 100, 300, 200, 50, 50, 250, 150);
+				c5.save();
+				c5.translate((50+250)/2,(50+150)/2);
+				c5.rotate(1);
+				c5.scale(-1,-1);
+				c5.shadowBlur = 10; 
+				c5.shadowOffsetX = 30; 
+				c5.shadowOffsetY = 30; 
+				c5.shadowColor = "rgba(100, 100, 100, 0.5)";
+				c5.drawImage(img, 100, 100, 300, 200, -100, -100, 150, 100);
+				c5.strokeRect(-100, -100, 150, 100);
+				c5.restore();
+			};
+
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<p>La imagen se sale del canvas 400 x 400p</p>
+	<p id="datos1"> </p>
+	<canvas width="400px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+	<p>Usamos un canvas mayor, de 800 x 400</p>
+	<canvas width="800px" height="400px" id="canvas2">
+		Este navegador no soporta canvas
+	</canvas>
+	<p>Dejamos el canvas como estaba, 400 x 400
+	   y redimensionamos la imagen, a <span id="w"></span> x <span id="h"></span></p>
+	<canvas width="400px" height="400px" id="canvas3">
+		Este navegador no soporta canvas
+	</canvas>
+	<p>Incluimos un fragmento de la imagen</p>
+	<canvas width="600px" height="400px" id="canvas4">
+		Este navegador no soporta canvas
+	</canvas>
+	<p>Experimentamos con el fragmento de la imagen</p>
+	<canvas width="600px" height="400px" id="canvas5">
+		Este navegador no soporta canvas
+	</canvas>
+		
+
+</body>
+</html>

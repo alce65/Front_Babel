@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Animación en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+	    // Condiciones de la animación
+		var vAngle = 0.01;
+		var step = 10;
+
+	    // Variables iniciales
+		var size = 100;
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+		var angle = 0;
+		var cmTID;
+		
+		drawStep();
+
+		function drawStep() {
+			// Borrado del canvas
+		    c.clearRect(0,0, w, h);
+            // salvado de las condiciones del canvas
+		    c.save()
+		    // Desplazamiento del origen del eje de coordenadas
+            c.translate(w / 2, h / 2);
+		    // Actualización: Rotación del eje de coordenadas
+            c.rotate(angle);
+		    // Dibujo de un cuadrado
+            c.strokeRect(-size / 2, -size / 2, size, size);
+            // recuperación de las condiciones
+            c.restore();
+            // actualización del ángulo del objeto
+			angle += vAngle;
+		    // Llamada recursiva transcurrido un intervalo de tiempo
+			clearTimeout(cmTID);
+			cmTID = setTimeout(drawStep, step);
+
+		}			
+	
+	} // Fin de la función CanvasApp
+	
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Animación en el Canvas</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

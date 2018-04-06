@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Colors en el canvas..</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp1();
+		canvasApp2();
+	    // Aislamos los procesos del canvas en una función independiente
+
+	}); // Fin de ready
+		
+	function canvasApp1 () {		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+		// Código del canvas
+
+		c.circulo = function (x, y, r, isRelleno) {
+		    this.beginPath();
+		    this.arc(x, y, r, 0, 2 * Math.PI)
+		    if (isRelleno) { this.fill(); }
+		    else { this.stroke(); }
+		    this.closePath()
+		};
+
+		var x0 = 0 // origen del gradiente: x
+            , y0 = 0 // origen del gradiente: y
+            , r0 = 0 // origen del gradiente: radio
+            , x1 = oCanvas.width // final del gradiente: x
+            , y1 = 0 // final del gradiente: y
+            , r1 = 100 // final del gradiente: radio
+            , width = 300
+		    , height = 100
+            , offset = 10
+		    , radio = 40
+            , mov = 10
+            , velocidad = 100;
+
+		//c.save();
+		var gradientH = c.createLinearGradient(x0, y0, x1, y1);
+		addColorStops(gradientH);
+
+		c.shadowBlur = 0;
+		c.shadowOffsetX = 5
+		c.shadowOffsetY = -2;
+		c.shadowColor = "rgba(100, 100, 100, 1)";
+		y1 = 300;
+		gradientD = c.createLinearGradient(x0, y0, x1, y1);
+		addColorStops(gradientD);
+
+		setTimeout(pintaCirculos, 1000);
+
+
+		function pintaCirculos() {
+		    c.clearRect(0,0,oCanvas.width,oCanvas.height);
+		    c.fillStyle = gradientH;
+		    c.circulo(x0 + radio, y0 + radio + 10, radio, true);
+		    c.fillStyle = gradientD;
+		    c.circulo(x0 + radio, y0+ 4*radio, radio, true);
+		    if (x0 + radio*2 + mov < oCanvas.width) {
+		        x0 += mov;
+		        y0 += 1;
+                setTimeout(pintaCirculos, velocidad);
+
+		    }
+		}
+
+		function addColorStops(gradient) {
+		    gradient.addColorStop("0", "magenta");
+		    gradient.addColorStop(".25", "blue");
+		    gradient.addColorStop(".50", "green");
+		    gradient.addColorStop(".75", "yellow");
+		    gradient.addColorStop("1.0", "red");
+		}
+
+	} // Fin de la función CanvasApp1
+	
+	function canvasApp2 () {		
+	    var oCanvas = document.getElementById('canvas2'); // JavaScript sin JQuery
+	    // var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+	    if (!oCanvas && !oCanvas.getContext) {
+	        return; }
+	    else {		
+	        var c = oCanvas.getContext('2d');
+	        if (!c) {
+	            return;
+	        } //Fin de la comprobación del contexto
+	    } // Fin de la comprobación del Canvas
+	    // Código del canvas
+
+	    var x0 = 0
+            , y0 = 0
+            , r0 = 0
+            , x1 = 200
+            , y1 = 0
+            , r1 = 100
+            , width = 300
+		    , height = 50
+            , offset = 10;
+
+	    x0 = x1 = width / 2;
+	    y0 = y1 = height / 2;
+	    //los 2 centros de coordenadas en el centr del primer elemnto a dibujar;
+	    gradient = c.createRadialGradient(x0, y0, r0, x1, y1, r1);
+	    addColorStops(gradient);
+	    c.fillStyle = gradient;
+	    c.fillRect(10, 0 * (height + offset), width, height);
+	    c.fillRect(100, 1 * (height + offset), width, height);
+
+
+	    y0 = (height + offset) + (height / 2);
+	    y1 = y0 + 100;
+	    gradient = c.createRadialGradient(x0, y0, r0, x1, y1, r1);
+	    addColorStops(gradient);
+	    c.fillStyle = gradient;
+	    c.fillRect(10, 2 * (height + offset), width, height);
+        c.fillRect(100, 3 * (height + offset), width, height);
+
+	    function addColorStops(gradient) {
+	        gradient.addColorStop("0", "magenta");
+	        gradient.addColorStop(".25", "blue");
+	        gradient.addColorStop(".50", "green");
+	        gradient.addColorStop(".75", "yellow");
+	        gradient.addColorStop("1.0", "red");
+	    }
+
+    } // Fin de la función CanvasApp2
+    </script>							
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600px" height="250px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+    <p>...</p>
+  
+    <hr>
+    <canvas width="600px" height="250px" id="canvas2">
+        Este navegador no soporta canvas
+    </canvas>
+    <p>...</p>
+
+
+</body>
+</html>

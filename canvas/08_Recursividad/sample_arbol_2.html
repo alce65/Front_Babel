@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Arbol en el canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+	$(function () {
+		
+
+		function drawBranch(l, direction) {
+		  c.save();
+		  c.rotate(angle * direction);
+		  c.fillRect(-l / 20, 0, l / 10, -l);
+		  if (l > minL) {
+		    c.translate(0, -l);
+		    drawBranch(l * branchScale, -1);
+		    drawBranch(l * branchScale, 1);
+		  }
+		  c.restore();
+		}
+
+
+
+		var miCanvas = $('#miCanvas')[0]; 
+		var c = miCanvas.getContext('2d'); 
+
+		var angle = 0.35;
+		var branchScale = 0.75;
+		var l = 75;
+		var minL = 5;
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+
+		c.translate(w/2, h);
+		drawBranch(l, 0);
+		
+	}); // Fin de ready()
+	</script>
+</head>
+
+<body>
+	<h1>Árbol en el Canvas 01</h1>
+	<div><canvas id="miCanvas" width="700" height="300"> </canvas> </div>
+	
+</body>
+</html>

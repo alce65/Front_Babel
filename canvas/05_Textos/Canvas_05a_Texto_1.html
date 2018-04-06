@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Texto en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		canvas {border: 2px solid black;}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		var formElement1 = document.getElementById("textBox");
+		//formElement1.addEventListener("keyup", textBoxChanged, false);
+		formElement1.onkeyup = textBoxChanged;
+		var formElement2 = document.getElementById("fillOrStroke");
+		//formElement2.addEventListener("change", fillOrStrokeChanged, false);
+		formElement2.onchange = fillOrStrokeChanged;
+
+		var message = "tu texto";
+		var fillOrStroke ="fill";		
+		drawScreen();	
+	
+		function drawScreen() {
+			//Background
+			c.fillStyle = "#ffffaa";
+			c.fillRect(0, 0, oCanvas.width, oCanvas.height);
+			//Box
+			c.strokeStyle = "#000000";
+			c.strokeRect(5, 5, oCanvas.width - 10, oCanvas.height - 10);
+			//Text
+			c.font = "50px serif";
+			var metrics = c.measureText(message);
+			var textWidth = metrics.width;
+			var xPosition = (oCanvas.width/2) - (textWidth/2);
+			var yPosition = (oCanvas.height/2);
+			
+	
+			switch(fillOrStroke) {
+				case "fill":
+					c.fillStyle = "#FF0000";
+					c.fillText (message, xPosition,yPosition);
+					break;
+				case "stroke":
+					c.strokeStyle = "#FF0000";
+					c.strokeText (message, xPosition,yPosition);
+					break;
+				case "both":
+					c.fillStyle = "#FF0000";
+					c.fillText (message, xPosition ,yPosition);
+					c.strokeStyle = "#000000";
+					c.strokeText (message, xPosition,yPosition);
+					break;
+			}
+			   
+		} // fin de la función drawScreen
+		
+		function textBoxChanged(oEvento) {
+			message = oEvento.target.value;
+			drawScreen();
+		} // Fin de la función texBoxChanged
+		
+		function fillOrStrokeChanged(oEvento) {
+			fillOrStroke = oEvento.target.value;
+			drawScreen();
+		} // fillOrStrokeChange
+
+	} // Fin de la función CanvasApp
+
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="500" height="300" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+
+	<form>
+		Text: <input id="textBox" placeholder="tu texto" />
+		<br>
+		Relleno (Fill) ó Borde (Stroke) :
+		<select id="fillOrStroke">
+			<option value="fill">fill</option>
+			<option value="stroke">stroke</option>
+			<option value="both">both</option>
+		</select>
+		<br>
+	</form>	
+	
+</body>
+</html>

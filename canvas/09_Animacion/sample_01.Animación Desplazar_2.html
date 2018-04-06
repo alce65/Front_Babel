@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Animación en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+        //Condiciones de la animación
+	    // Coordenadas del vector velocidad
+		var vx = 4;
+		var vy = 1;
+	    // Intervalo con el que se repite la animación en milisegundos
+		var step = 50;  		
+		
+        // Condiciones iniciales
+		var x = 0;
+		var y = 0;
+		var size = 50;
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+		var cmTID;
+		
+		drawStep();
+
+		function drawStep() {
+			// Borrado del canvas
+		    c.clearRect(0, 0, w, h);
+		    // salvado de las condiciones del canvas
+            c.save()
+		    // traslación del origen de coordenadas
+            c.translate(x, y);
+			// Dibujo de un cuadrado desplazando lo que corresponde a su velocidad
+			c.strokeRect(vx, vy, size, size);
+            // recuperación de los valores del canvas
+			c.restore();
+		    // Actualización de los datos de posición del eleemnto
+			x += vx;
+			y += vy;
+		    // Parada en caso de llegar al borde
+			if (x + vx + size < w && y + vy + size < h) {
+			    // Llamada recursiva transcurrido
+				//un intervalo de tiempo
+				clearTimeout(cmTID);
+				cmTID = setTimeout(drawStep, step);
+			}
+		}			
+	
+	} // Fin de la función CanvasApp
+	
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Animación en el Canvas</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

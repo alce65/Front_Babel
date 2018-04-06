@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Full Canvas</title>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<!--<link rel="stylesheet" href="default.css">-->
+	<style>
+	* {
+		margin: 0;
+     	padding: 0; } 
+	html, body { 
+		height: 100%; 
+	    width: 100%;} 
+	canvas {
+		display: block; }
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = $('#canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas[0].getContext) {
+			return; }
+		else {		
+			var c = oCanvas[0].getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		oCanvas.attr("width", window.innerWidth); 
+		oCanvas.attr("height", window.innerHeight); 
+
+		c.fillRect(0, 0,oCanvas.width(), oCanvas.height()); 
+		c.fillRect(0, 0,20,20);
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

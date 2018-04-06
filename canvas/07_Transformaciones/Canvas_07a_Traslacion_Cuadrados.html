@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Translacion de cuadrados</title>
+	<link rel="stylesheet" href="default.css">
+    <style>
+        form {
+            width: 600px;
+        }
+        input[type=range] {
+            width: 60%;
+        }
+    </style>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+
+	    // Código que amplia el contexto
+	
+		c.cuadrado = function (x, y, l, isRelleno) {
+		    if (isRelleno) { this.fillRect(x, y, l, l); }
+		    else { this.strokeRect(x, y, l, l); }
+		};
+
+		c.clearCanvas = function () {
+		    c.clearRect(0, 0, oCanvas.width, oCanvas.height);
+		}
+
+        // código del canvas
+
+        // Manejador de eventos para el control
+		var domNumCuadros = document.querySelector("#numCuadros");
+		domNumCuadros.addEventListener("change", drawCanvas, true);
+
+	    // Condiciones iniciales
+   		const xCOORD = 10;
+		const yCOORD = 10;
+		const SIZE = 50;
+        var num;
+        c.fillStyle = "rgba(0, 0, 255, 0.5)";
+
+        // Ejecución inicial del menejador de eventos
+		drawCanvas();
+
+        // Funciones
+
+		function drawCanvas() {
+
+		    // Se escribe en pantalla el valor numerico correspondiente
+            // al número seleccionado por el usuario en el range
+            document.querySelector("span").innerHTML = domNumCuadros.value;
+		    c.save();
+		    c.clearCanvas();
+		    num = 0; // Número de cuadrados pintados
+		    drawStep(); // Llamada inicial a la función recursiva que pinta
+		    c.restore();
+		};
+
+		function drawStep() { // Función recursiva que pinta cuadrados
+            // Pinta un cuadrado
+		    c.cuadrado(xCOORD, yCOORD, SIZE, true)
+            // Desplaza el origen de coordenadas
+		    c.translate(SIZE / 2, SIZE / 2);
+		    // Lamada recurseva a la función
+		    if (++num < domNumCuadros.value) {
+		        drawStep();        
+		    };
+		};
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+    <p>Número de cuadrados a pintar: <span></span></p>
+    <form>
+        <input type="range" min="2" max="14" value="2" name="numCuadros" id="numCuadros" />
+    </form>    
+</body>
+</html>

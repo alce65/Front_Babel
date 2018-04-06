@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Texto en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		canvas {border: 2px solid black;}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		var formElement1 = document.getElementById("textBox");
+		//formElement1.addEventListener("keyup", textBoxChanged, false);
+		formElement1.onkeyup = textBoxChanged;
+		var formElement2 = document.getElementById("fillOrStroke");
+		//formElement2.addEventListener("change", fillOrStrokeChanged, false);
+		formElement2.onchange = fillOrStrokeChanged;
+		
+		formElement = document.getElementById("textSize");
+		formElement.addEventListener('change', textSizeChanged, false);
+		formElement = document.getElementById("textFont");
+		formElement.addEventListener('change', textFontChanged, false);
+		formElement = document.getElementById("fontWeight");
+		formElement.addEventListener('change', fontWeightChanged, false);
+		formElement = document.getElementById("fontStyle");
+		formElement.addEventListener('change', fontStyleChanged, false);
+		formElement = document.getElementById("textFillColor");
+		formElement.addEventListener('change', textFillColorChanged, false);
+		formElement = document.getElementById("textStrokeColor");
+		formElement.addEventListener('change', textStrokeColorChanged, false);
+
+
+
+//		formElement = document.getElementById("textBaseline");
+//		formElement.addEventListener('change', textBaselineChanged, false);
+//		formElement = document.getElementById("textAlign");
+//		formElement.addEventListener('change', textAlignChanged, false);
+
+		var message = "tu texto";
+		var fillOrStroke ="fill";		
+		
+		var fontSize = "50";
+		var fontFace = "serif";
+		var fontWeight = "normal";
+		var fontStyle = "normal";
+		var textFillColor = "#ff0000";
+		var textStrokeColor = "#000000";
+		//var textBaseline = "middle";
+		//var textAlign = "center";
+
+		drawScreen();	
+	
+		function drawScreen() {
+			//Background
+			c.fillStyle = "#ffffaa";
+			c.fillRect(0, 0, oCanvas.width, oCanvas.height);
+			//Box
+			c.strokeStyle = "#000000";
+			c.strokeRect(5, 5, oCanvas.width - 10, oCanvas.height - 10);
+			//Text
+			//c.font = "50px serif";
+			c.font = fontWeight + " " + fontStyle + " " + fontSize + "px " + fontFace;
+			//c.textBaseline = textBaseline;
+			//c.textAlign = textAlign;
+			
+			var metrics = c.measureText(message);
+			var textWidth = metrics.width;
+			var xPosition = (oCanvas.width/2) - (textWidth/2);
+			var yPosition = (oCanvas.height/2);
+			
+	
+			switch(fillOrStroke) {
+				case "fill":
+					c.fillStyle = textFillColor;
+					c.fillText (message, xPosition,yPosition);
+					break;
+				case "stroke":
+					c.strokeStyle = textStrokeColor;
+					c.strokeText (message, xPosition,yPosition);
+					break;
+				case "both":
+					c.fillStyle = textFillColor;
+					c.fillText (message, xPosition ,yPosition);
+					c.strokeStyle = textStrokeColor;
+					c.strokeText (message, xPosition,yPosition);
+					break;
+			}
+			   
+		} // fin de la función drawScreen
+		
+		function textBoxChanged(oEvento) {
+			message = oEvento.target.value;
+			drawScreen();
+		} // Fin de la función texBoxChanged
+		
+		function fillOrStrokeChanged(oEvento) {
+			fillOrStroke = oEvento.target.value;
+			drawScreen();
+		} // fillOrStrokeChange
+		
+		function textSizeChanged(oEvento) {
+			fontSize = oEvento.target.value;
+			drawScreen();
+		}
+		
+		function textFontChanged(oEvento) {
+			fontFace = oEvento.target.value;
+			drawScreen();
+		}
+
+		function fontWeightChanged(oEvento) {
+			fontWeight = oEvento.target.value;
+			drawScreen();
+		}
+		function fontStyleChanged(oEvento) {
+			fontStyle = oEvento.target.value;
+			drawScreen();
+		}
+		function textFillColorChanged(oEvento) {
+			textFillColor = oEvento.target.value;
+			drawScreen();
+		}
+		function textStrokeColorChanged(oEvento) {
+			textStrokeColor = oEvento.target.value;
+			drawScreen();
+		}
+
+
+	} // Fin de la función CanvasApp
+
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="500px" height="300px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+
+	<form>
+		Text: <input id="textBox" placeholder="tu texto" />
+		<br>
+		Relleno (Fill) ó Borde (Stroke) :
+		<select id="fillOrStroke">
+		<option value="fill">fill</option>
+		<option value="stroke">stroke</option>
+		<option value="both">both</option>
+		</select>
+		<br>
+		Text Font: <select id="textFont">
+			<option value="serif">serif</option>
+			<option value="sans-serif">sans-serif</option>
+			<option value="cursive">cursive</option>
+			<option value="fantasy">fantasy</option>
+			<option value="monospace">monospace</option>
+		</select>
+		<br>
+		Text Size: <input type="range" id="textSize"
+							min="0"
+							max="200"
+							step="1"
+							value="50"/>
+		<br>
+		Font Weight:
+		<select id="fontWeight">
+			<option value="normal">normal</option>
+			<option value="bold">bold</option>
+			<option value="bolder">bolder</option>
+			<option value="lighter">lighter</option>
+		</select>
+		<br>
+		Font Style:
+			<select id="fontStyle">
+			<option value="normal">normal</option>
+			<option value="italic">italic</option>
+			<option value="oblique">oblique</option>
+			</select>
+		<br>
+		Color de fondo del texto
+		<input type="color" id="textFillColor" value="#FF0000">
+		<br>
+		Color de borde del texto
+		<input type="color" id="textStrokeColor" value="#000000">
+
+	</form>	
+	
+</body>
+</html>

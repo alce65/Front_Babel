@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+		$(function () {
+			var oLienzo = document.getElementById('canvas1'); // JavaScript sin JQuery
+			// var oLienzo = $('#canvas1')[0]; // opción válida en JQuery
+			var c = oLienzo.getContext('2d');
+			c.fillRect(50,50,200,200);
+			circle(150,150,70,'orange');
+			c.beginPath();
+            // boca
+			c.lineWidth = 5;
+			// c.arc(150,150,50,0.8*Math.PI,0.2*Math.PI,true);
+			c.moveTo(120,180);
+			c.quadraticCurveTo(150, 210, 180, 180);
+		    c.quadraticCurveTo(150, 190, 120,180);
+			c.stroke();
+			c.closePath();
+            //ojos
+			circle(120,130,8,'blue');
+			circle(180,130,8,'blue');		
+			c.beginPath();
+            // ceja izda
+			c.moveTo(110, 115);
+			c.lineTo(120,110);
+			c.lineTo(130, 115);
+            // ceja dcha
+			c.moveTo(170,115);
+			c.lineTo(180,110);
+			c.lineTo(190, 115);
+            // nariz
+			c.lineWidth = 3;
+			c.moveTo(150,135);
+			c.lineTo(160, 155);
+			c.lineTo(150,155) 
+			c.stroke();
+
+
+			function circle (x,y,r,color){
+				c.fillStyle=color;
+				c.beginPath();
+				c.arc(x,y,r,0,2*Math.PI,true);
+				c.closePath();
+				c.fill();
+				}
+				
+		});//fid de ready
+		 
+	</script>
+</head>
+
+<body>
+	<h1>Uso del canvas (lienzo)</h1>
+	<p title="Párrafo 1">En primer lugar, creamos un canvas y seleccionamos su correspondiente objeto.</p>
+	<canvas width="500px" height="500px" id="canvas1">Este navegador no soporta canvas</canvas>
+</body>
+</html>

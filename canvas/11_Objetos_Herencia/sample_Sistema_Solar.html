@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Planetas en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		// Código del canvas
+		
+		var step = 10; // velocidad de rotación de los planetas
+		var angle = 0.01;
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+		var cmTID;
+		var centerX = w / 2; // width 400px
+		var centerY = h / 2; // height 400px
+		c.translate(centerX,centerY);
+
+		drawStep();
+		
+		function drawStep() {
+		  c.clearRect(-w / 2, -h / 2, w, h);
+
+		  drawSol();
+
+		  c.fillStyle = "green";
+		  
+		  strokeCircle(0,0,63); //órbita 1
+		  //c.fillRect(50, 30, 5, 5); // planeta 1
+		  fillCircle(52, 33, 5);			
+		  
+		  strokeCircle(0,0,83); //órbita 2	  
+		  //c.fillRect(-50, -70, 5, 5); //planeta 2 
+		  fillCircle(-48, -68, 5);					  
+
+		  strokeCircle(0,0,103); //órbita 3
+		  //c.fillRect(10, 100, 5, 5); // planeta 3
+		  fillCircle(10, 103, 5);	  
+		  
+		  
+		  c.rotate(angle);
+		  clearTimeout(cmTID);
+		  cmTID = setTimeout(drawStep, step);
+		}
+
+		function drawSol() {
+		    c.strokeStyle = "red";
+		    c.fillStyle = "red";
+		    fillCircle(0, 0, 20); // sol redondo
+		}
+	
+		function strokeCircle(x,y,r) {
+			c.beginPath();
+			c.arc(x, y, r, 0, 2*Math.PI);
+			c.stroke();
+			c.closePath();
+		}
+
+		function fillCircle(x,y,r) {
+			c.beginPath();
+			c.arc(x, y, r, 0, 2*Math.PI);
+			c.fill();
+			c.closePath();
+		}
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Planetas en el Canvas</h1>
+	<canvas width="400" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

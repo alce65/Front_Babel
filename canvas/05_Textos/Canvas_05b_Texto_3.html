@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Texto en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		canvas {border: 2px solid black;}			
+		fieldset {width:475px}
+		label {
+			display: block;
+			width:90%;
+			margin:auto;}
+		label span {
+			display: inline-block;
+			width:40%;
+			padding: 0% 5%;
+			text-align: right;
+		}	
+	</style>
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		var formElement1 = document.getElementById("textBox");
+		//formElement1.addEventListener("keyup", textBoxChanged, false);
+		formElement1.onkeyup = textBoxChanged;
+		var formElements = {};
+		formElements["fillOrStroke"] = document.getElementById("fillOrStroke");
+		formElements["textSize"] = document.getElementById("textSize");
+		formElements["textFont"] = document.getElementById("textFont");
+		formElements["fontWeight"] = document.getElementById("fontWeight");
+		formElements["fontStyle"] = document.getElementById("fontStyle");
+		formElements["textFillColor"] = document.getElementById("textFillColor");
+		formElements["textStrokeColor"] = document.getElementById("textStrokeColor");
+		formElements["textBaseline"] = document.getElementById("textBaseline");
+		formElements["textAlign"] = document.getElementById("textAlign");
+		for (var control in formElements) {
+		    formElements[control].addEventListener('change', drawScreen, false);
+		}
+
+		var message = "tu texto";
+		drawScreen();	
+	
+		function drawScreen() {
+			//Background
+		    c.fillStyle = "#ffffaa";
+			c.fillRect(0, 0, oCanvas.width, oCanvas.height);
+			//Box
+			c.strokeStyle = "#000000";
+			c.strokeRect(5, 5, oCanvas.width - 10, oCanvas.height - 10);
+			//Text
+			c.font = formElements["fontWeight"].value + " " +
+                     formElements["fontStyle"].value + " " +
+                     formElements["textSize"].value + "px " +
+                     formElements["textFont"].value;
+
+			c.textBaseline = formElements["textBaseline"].value;
+			c.textAlign = formElements["textAlign"].value;
+			
+			var metrics = c.measureText(message);
+			var textWidth = metrics.width;
+			var xPosition = (oCanvas.width/2) - (textWidth/2);
+			var yPosition = (oCanvas.height/2);
+			
+			c.beginPath();
+			c.moveTo(xPosition,yPosition);
+			c.lineTo(+xPosition+50,yPosition);
+			c.stroke();
+			c.closePath();
+	
+			switch (formElements["fillOrStroke"].value) {
+				case "fill":
+				    c.fillStyle = formElements["textFillColor"].value;
+					c.fillText (message, xPosition,yPosition);
+					break;
+				case "stroke":
+				    c.strokeStyle = formElements["textStrokeColor"].value;
+					c.strokeText (message, xPosition,yPosition);
+					break;
+				case "both":
+				    c.fillStyle = formElements["textFillColor"].value;
+					c.fillText (message, xPosition ,yPosition);
+					c.strokeStyle = formElements["textStrokeColor"].value;
+					c.strokeText (message, xPosition,yPosition);
+					break;
+			}
+			   
+		} // fin de la función drawScreen
+		
+		function textBoxChanged(oEvento) {
+			message = oEvento.target.value;
+			drawScreen();
+		} // Fin de la función texBoxChanged
+
+	} // Fin de la función CanvasApp
+
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="500" height="300" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+
+	<form>
+		<fieldset>
+			<legend>Texto para el canvas</legend>
+			<label>
+				<span class="label">Texto:</span>  
+				<input id="textBox" placeholder="tu texto" />
+			</label>
+		</fieldset>
+		<fieldset>
+			<legend>Texto Relleno (Fill) ó Borde (Stroke)</legend>
+			<label>
+				<span class="label">Técnica de dibujo :</span>  
+				<select id="fillOrStroke">
+					<option value="fill">Relleno (fill)</option>
+					<option value="stroke">Borde (stroke)</option>
+					<option value="both">Ambos</option>
+				</select>
+			</label>
+		</fieldset>		
+		<fieldset>
+			<legend>Características de las fientes</legend>
+			<label>
+				<span class="label">Fuente:</span>  
+				<select id="textFont">
+					<option value="serif">serif</option>
+					<option value="sans-serif">sans-serif</option>
+					<option value="cursive">cursive</option>
+					<option value="fantasy">fantasy</option>
+					<option value="monospace">monospace</option>
+				</select>
+			</label>
+			<label>
+				<span class="label">Tamaño:</span>  
+				<input type="range" id="textSize"
+						min="0" max="200" step="1" value="50"/>
+			</label>
+			<label>
+				<span class="label">"Peso":</span>  
+				<select id="fontWeight">
+					<option value="normal">normal</option>
+					<option value="bold">bold</option>
+					<option value="bolder">bolder</option>
+					<option value="lighter">lighter</option>
+				</select>
+			</label>
+			<label>
+				<span class="label">Estilo:</span>  
+				<select id="fontStyle">
+					<option value="normal">normal</option>
+					<option value="italic">italic</option>
+					<option value="oblique">oblique</option>
+				</select>
+			</label>
+		</fieldset>
+		<fieldset>
+			<legend>Colores del texto</legend>
+			<label>
+				<span class="label">Color de fondo:</span>  
+				<input type="color" id="textFillColor" value="#FF0000">
+			</label>
+			<label>
+				<span class="label">Color del borde:</span>  
+				<input type="color" id="textStrokeColor" value="#000000">
+			</label>
+		</fieldset>
+		<fieldset>
+			<legend>Alineamiento del texto</legend>
+			<label>
+				<span class="label">Vertical (Baseline):</span>  
+				<select id="textBaseline">
+					<option value="middle">middle</option>
+					<option value="top">top</option>
+					<option value="hanging">hanging</option>
+					<option value="alphabetic">alphabetic</option>
+					<option value="ideographic">ideographic</option>
+					<option value="bottom">bottom</option>
+				</select>
+			</label>
+			<label>
+				<span class="label">Horizontal:</span>  
+				<select id="textAlign">
+					<option value="center">center</option>
+					<option value="start">start</option>
+					<option value="end">end</option>
+					<option value="left">left</option>
+					<option value="right">right</option>
+				</select>
+			</label>			
+		</fieldset>
+		<br>
+	</form>		
+</body>
+</html>

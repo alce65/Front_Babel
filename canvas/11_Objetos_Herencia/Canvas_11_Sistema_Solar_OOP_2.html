@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Planetas en el Canvas</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+        // clases y objetos
+
+		function Astro() { }
+
+		Astro.prototype.creaOrbita = function (x, y, r) { //strokeCircle
+		    c.beginPath();
+		    c.arc(x, y, r, 0, 2 * Math.PI);
+		    c.stroke();
+		    c.closePath();
+		}
+
+		Astro.prototype.creaAstro = function (x, y, r) { //fillCircle
+		    c.beginPath();
+		    c.arc(x, y, r, 0, 2 * Math.PI);
+		    c.fill();
+		    c.closePath();
+		}
+
+		function Estrella(size, color) {
+		    this.size = this.size;
+		    this.color = color;
+		}
+
+	    // extends Astro
+		var F = function () { };
+		F.prototype = Astro.prototype;
+		Estrella.prototype = new F();
+		Estrella.prototype.constructor = Estrella;
+		Estrella.uber = Astro.prototype;
+
+		Estrella.prototype.pintar = function () {
+		    c.fillStyle = this.color;
+		    this.creaAstro(0, 0, 20);
+		}
+
+		function Planeta(orbita, angle, size, v_angle, color, color_orbita) {
+		    this.orbita = orbita;
+		    this.angle = angle; // retación de los ejes
+		    this.x = orbita; // coord x tras la rotación
+		    this.y = 0; // coord y tras la rotacion
+		    this.size = size;
+		    this.v_angle = v_angle;
+		    this.color = color;
+		    this.color_orbita = color_orbita;
+		}
+
+	    // extends Astro
+		var F = function () { }
+		F.prototype = Astro.prototype;
+		Planeta.prototype = new F();
+		Planeta.prototype.constructor = Planeta;
+		Planeta.uber = Astro.prototype;
+
+		Planeta.prototype.pintar = function () {
+		    c.save();
+		    c.strokeStyle = this.color_orbita;
+		    c.fillStyle = this.color;
+		    this.creaOrbita(0, 0, this.orbita);
+		    c.rotate(this.angle);
+		    this.creaAstro(this.x, this.y, this.size);
+		    c.restore()
+		    this.angle += this.v_angle;
+		}
+
+		// Código del canvas
+		
+		var step = 20; // velocidad de rotación de los planetas
+		var w = c.canvas.width;
+		var h = c.canvas.height;
+		var cmTID;
+		var centerX = w / 2; // width 400px
+		var centerY = h / 2; // height 400px
+		c.translate(centerX, centerY);
+
+		var sol = new Estrella(20, "Khaki");
+		var planetas = [
+            new Planeta(63, 0.4, 5, 0.01, "DarkOliveGreen", "darkred"),
+            new Planeta(83, 1.6, 6, 0.02, "CadetBlue", "red"),
+            new Planeta(103, 0.8, 7, 0.03, "Indigo", "maroon")
+		];
+
+
+		drawStep();
+		
+		function drawStep() {
+		  c.clearRect(-w / 2, -h / 2, w, h);
+		  sol.pintar();
+		  for (var i = 0; i < planetas.length; i++) {
+		      planetas[i].pintar();
+		  }
+		  clearTimeout(cmTID);
+		  cmTID = setTimeout(drawStep, step);
+		}
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Planetas en el Canvas</h1>
+	<canvas width="400" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

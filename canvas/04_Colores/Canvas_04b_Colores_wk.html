@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Distorsion de colores</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+
+	$(function () {
+		var ctx;
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		var size = 5;
+		oProceso = new Worker("worker.js");
+		setInterval(function () {oProceso.postMessage(size)}, 50);	
+		oProceso.onmessage = function (oEvent) {
+		    //recibir[i, j, randomRGBA]
+		    //c.fillStyle = oEvent.data[2];
+		    //c.fillRect(oEvent.data[0], oEvent.data[1], size, size);
+		    for (i = 0; i < 600; i += size) {
+		        for (j = 0; j < 400; j += size) {
+		            c.fillStyle = oEvent.data[i][j];
+		            c.fillRect(i, j, size, size);
+		        }
+		    }
+		}				
+	} // Fin de la función CanvasApp
+		
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

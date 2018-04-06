@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas: Drag_n_Drop</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		const CNV_H = 600;
+		const CNV_V = 400;
+		const NORMAL_COLOR = "green";
+		const SELECT_COLOR = "red";
+		const SIZE = 20;
+		const STEP = 50;
+
+	    // eventos
+
+		oCanvas.addEventListener("mousedown", raton, true);
+		oCanvas.addEventListener("mousemove", raton, true);
+
+
+		// Código del canvas: Funciones
+
+		function raton(oEvent) {
+		    var canvasPosition = $(this).offset();
+		    var mouseX = oEvent.layerX || 0;
+		    var mouseY = oEvent.layerY || 0;
+
+		    if (oEvent.type == "mousedown") {
+		        if (Circulo.seleccionado < 0) { // clic para seleccionar
+		            for (i = 0; i < circulos.length; i++) {
+		                circulos[i].tocadoRaton(mouseX, mouseY, i);
+		            }
+		        } else { // clic para soltar                  
+		            circulos[Circulo.seleccionado].liberar(mouseX, mouseY);
+		        }
+		    } else if (oEvent.type == "mousemove") {
+		        if (Circulo.seleccionado >= 0) {
+		            // borrar el area del raton selecciomnado
+		            //var x = circulos[Circulo.seleccionado].x
+		            //var y = circulos[Circulo.seleccionado].y
+		            circulos[Circulo.seleccionado].x = mouseX;
+		            circulos[Circulo.seleccionado].y = mouseY;
+		            circulos[Circulo.seleccionado].color = SELECT_COLOR;
+		        }
+		    }
+		} // Fin del manejador
+		
+		function Circulo(x, y, r, isRelleno, color) {
+
+		    this.x = x;
+		    this.y = y;
+		    this.r = r;
+		    this.isRelleno = isRelleno;
+		    this.color = color;
+
+		} // Fin de la funcioón constructora Circulo
+		
+		Circulo.seleccionado = -1 // Propiedad "estática" de la "clase"
+		Circulo.prototype.dibuja = function () {
+		        c.save();
+		        c.translate(this.x, this.y);  // Mueve el origen de coordenadas
+		        c.beginPath();
+		        c.arc(0, 0, this.r, 0, 2 * Math.PI);
+		        if (this.isRelleno) {
+		            c.fillStyle = this.color;
+		            c.fill();
+		        }
+		        else {
+		            c.stroke = this.color;
+		            c.stroke();
+		        }
+		        c.closePath();
+		        c.restore();
+		    } // Fin del método
+
+		Circulo.prototype.tocadoRaton = function (mouseX, mouseY, num) {
+		    //esTocado = false
+		    if (Math.pow(mouseX-this.x,2) + 
+                Math.pow(mouseY - this.y, 2) < Math.pow(this.r, 2)) {
+		        this.dibuja(SELECT_COLOR);
+		        Circulo.seleccionado = num;
+		        //sTocado = true;
+		    } else {
+		        this.dibuja(NORMAL_COLOR);
+		    }
+		    //return esTocado 
+		} // Fin del metodo
+		        
+		Circulo.prototype.liberar = function () {
+		    this.color = NORMAL_COLOR;
+		    Circulo.seleccionado = -1;
+		}
+
+
+		function drawCanvas() {
+		    c.clearRect(0, 0, CNV_H, CNV_V);
+		    for (var i = 0; i < circulos.length; i++) {
+		        circulos[i].dibuja();
+		    };
+		    setTimeout(drawCanvas, STEP);
+		}
+
+		const TOT_CIRCULOS = 10;
+
+	    // Código del canvas
+		var circulos = [];
+		
+		//circulos[0] = new Circulo(50, 50, SIZE, true, NORMAL_COLOR);
+		//circulos[1] = new Circulo(150, 150, SIZE, true, NORMAL_COLOR);
+
+		for (var i = 0; i < TOT_CIRCULOS; i++) {
+            var x = Math.floor(Math.random() * (CNV_H - SIZE)) + SIZE;
+		    //entre SIZE y CNV_H)
+            var y = Math.floor(Math.random() * (CNV_V - SIZE)) + SIZE;
+		    // entre SIZE y CNV_V)
+            circulos[i] = new Circulo(x, y, SIZE, true, NORMAL_COLOR);
+		}
+            
+		drawCanvas();
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

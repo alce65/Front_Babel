@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Canvas 07</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	<script>
+		
+	$(function () {
+		var miCanvas = $('#miCanvas')[0]; 
+		var c = miCanvas.getContext('2d'); 
+		var s = 50, x=0, y=0;
+		var color = new Array("red", "yellow");
+		for (var j=0; j<8; j++){
+			for (var i=0; i<8; i++ ){
+				c.fillStyle = color[(i+j)%2];
+				c.fillRect(x + (i*s), y + (j*s), s, s);
+			}
+		}			
+	}); // Fin de ready()
+	</script>
+</head>
+
+<body>
+	<h1>Canvas 07</h1>
+	<div><canvas id="miCanvas" width="400" height="400"> </canvas> </div>
+	<footer>
+		<small>Alejandro</small>
+	</footer>
+</body>
+</html>

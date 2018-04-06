@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Tratamiento de imágenes</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		var imgNave = new Image();
+		imgNave.src = "transbordador.jpg";
+		imgNave.onload = drawCanvas;
+
+		document.querySelector("#original").addEventListener("click", drawCanvas, false);
+		document.querySelector("#negativo").addEventListener("click", drawNegativo, false);
+		document.querySelector("#aclarar").addEventListener("click", drawClaro, false);
+		document.querySelector("#oscurecer").addEventListener("click", drawOscuro, false);
+
+		function drawCanvas() {
+		    c.drawImage(imgNave, 0, 0);
+        }
+
+		function drawNegativo() {
+		    var imageData = c.getImageData(0, 0, 500, 400);
+		    var data = imageData.data;
+		    for (var i = 0; i < data.length; i += 4) {
+		        data[i] = 255 - data[i];
+		        data[i + 1] = 255 - data[i + 1];
+		        data[i + 2] = 255 - data[i + 2];
+		    }
+		    c.putImageData(imageData, 0, 0)
+		}
+
+		function drawClaro() {
+		    var imageData = c.getImageData(0, 0, 500, 400);
+		    var data = imageData.data;
+		    for (var i = 0; i < data.length; i += 4) {
+		        data[i] = data[i] + 100;
+		        data[i + 1] = data[i + 1] + 100;
+		        data[i + 2] = data[i + 2] + 100;
+		    }
+		    c.putImageData(imageData, 0, 0)
+		}
+
+
+		function drawOscuro() {
+		    var imageData = c.getImageData(0, 0, 500, 400);
+		    var data = imageData.data;
+		    for (var i = 0; i < data.length; i += 4) {
+		        data[i] = data[i] - 100;
+		        data[i + 1] = data[i + 1] - 100;
+		        data[i + 2] = data[i + 2] - 100;
+		    }
+		    c.putImageData(imageData, 0, 0)
+		}
+
+	} // Fin de la función CanvasApp
+	</script>	
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+    <form>
+        <button id="original" type="button">Original</button>
+        <button id="negativo" type="button">Negativo</button>
+        <button id="aclarar" type="button">Aclarar</button>
+        <button id="oscurecer" type="button">Oscurecer</button>
+
+    </form>
+</body>
+</html>

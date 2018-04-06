@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Objetos - Circulos</title>
+	<link rel="stylesheet" href="default.css">
+    <style>
+        canvas {
+            border: 1px solid;
+            box-shadow: 5px 5px silver;
+        }
+    </style>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+
+        // Animamos un único círculo, con rebote cuando choca con los bordes del canvas
+
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		function Circulo(x, y, r, isRelleno, dx, dy) {
+		    this.x = x;
+		    this.y = y;
+		    this.r = r;
+		    this.isRelleno = isRelleno;
+		    this.dx = dx;
+		    this.dy = dy;
+
+		}; // Fin del constructor
+
+		Circulo.prototype.dibuja = function () {
+		    c.save();
+		    c.translate(this.x, this.y);  // Mueve el origen de coordenadas
+
+		    this.gradient = c.createRadialGradient(this.r/2, this.r/2, 0, this.r/2, this.r/2, this.r);
+		    //c.addColorStops(this.gradient);
+		    this.addColorStops();
+
+		    c.beginPath();
+		    c.arc(0, 0, this.r, 0, 2 * Math.PI);
+		    if (this.isRelleno) {
+		        c.fillStyle = this.gradient;
+		        c.fill();
+		    }
+		    else {
+		        c.stroke();
+		    }
+		    c.closePath();
+		    c.restore();
+		}
+
+		Circulo.prototype.update = function () {
+
+		    // modifica los valores de posición y ángulo
+		    // en función de las propiedades del propio objeto
+		    this.x += this.dx;
+		    this.y += this.dy;
+
+		    // Rebotes en los bordes
+		    if (this.x - this.r < 0 ||
+                   this.x + this.r > W) {
+		        this.dx = -this.dx;
+		    }
+		    if (this.y - this.r < 0 ||
+                this.y + this.r > H) {
+		        this.dy = -this.dy;
+		    }
+
+		    this.dibuja();
+		};
+
+
+		Circulo.prototype.addColorStops = function () {
+		    this.gradient.addColorStop("0", "white");
+		    //this.gradient.addColorStop(".25", "red");
+		    this.gradient.addColorStop(".50", "IndianRed");
+		    //this.gradient.addColorStop(".75", "FireBrick");
+		    this.gradient.addColorStop("1.0", "FireBrick");
+		}
+
+
+	    // valores globales del canvas
+		const W = c.canvas.width;
+		const H = c.canvas.height;
+		const SIZE = 50; // tamaño de los círculos
+
+	    // valores de la animación
+	    var tiempo = 50; // In milliseconds
+	    var cmTID;
+
+	    var crc1 = new Circulo(W/2, H/2, SIZE/2, true, 5, 5); //(x, y, r, isRelleno, dx, dy)
+		
+		drawCanvas();
+
+		function drawCanvas() {
+		    c.clearRect(0, 0, W, H);
+		    // Hacemos que las cajas del array de objetos se creen a si mismas
+		    //for (var i = 0; i < cajas.length; i = i + 1) {
+		    crc1.update();
+            //}
+		    clearTimeout(cmTID);
+		    cmTID = setTimeout(drawCanvas, tiempo);
+		}
+
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600" height="400" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>

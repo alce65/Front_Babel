@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3, canvas">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5 Canvas">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>..</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+	
+	<script>
+	$(function () {
+		canvasApp();
+		// Aislamos los procesos del canvas en una función independiente
+	}); // Fin de ready
+		
+	function canvasApp () {
+		
+		var oCanvas = document.getElementById('canvas1'); // JavaScript sin JQuery
+		// var oCanvas = $('#canvas1')[0]; // opción válida en JQuery
+
+		if (!oCanvas && !oCanvas.getContext) {
+			return; }
+		else {		
+			var c = oCanvas.getContext('2d');
+			if (!c) {
+				return;
+			} //Fin de la comprobación del contexto
+		} // Fin de la comprobación del Canvas
+	
+		c.strokeStyle  = "black";
+		c.lineWidth  = 10;
+		c.lineJoin  = 'bevel';
+		
+		c.lineCap  = 'butt';
+		c.beginPath();
+		c.moveTo(10, 10);
+		c.lineTo(50, 10);
+		c.stroke();
+		c.closePath();
+		
+		c.lineCap  = 'round';
+		c.beginPath();
+		c.moveTo(10, 30);
+		c.lineTo(50, 30);
+		c.stroke();
+		c.closePath();
+		
+		c.lineCap  = 'square';
+		c.beginPath();
+		c.moveTo(10, 50);
+		c.lineTo(50, 50);
+		c.stroke();
+		c.closePath();
+			
+	
+		c.strokeStyle  = "black";
+		c.lineWidth  = 10;
+		c.lineCap  = 'butt';
+
+		c.lineJoin  = 'miter';
+		c.beginPath();
+		c.moveTo(10, 100);
+		c.lineTo(50, 100);
+		c.lineTo(50, 120);
+		c.stroke();
+		c.closePath();
+	
+		c.lineJoin  = 'bevel';
+		c.beginPath();
+		c.moveTo(10, 140);
+		c.lineTo(50, 140);
+		c.lineTo(50, 160);
+		c.stroke();
+		c.closePath();
+
+		c.lineJoin  = 'round';
+		c.beginPath();
+		c.moveTo(10, 180);
+		c.lineTo(50, 180);
+		c.lineTo(50, 200);
+		c.stroke();
+		c.closePath();
+	
+	
+	} // Fin de la función CanvasApp
+		
+	</script>	
+			
+			
+</head>
+
+<body>
+	<h1>Canvas</h1>
+	<canvas width="600px" height="400px" id="canvas1">
+		Este navegador no soporta canvas
+	</canvas>
+</body>
+</html>
