@@ -1,0 +1,38 @@
+body{  text-align: center;}
+header, section, footer, aside, nav, article, figure, figcaption, hgroup{display : block;}
+nav{margin: 5px 0px;
+    height:20px;}
+#reproductor{
+    width: 720px;
+    margin: 20px auto;
+    padding: 5px;
+    background: #999999;
+    border: 1px solid #666666;
+    border-radius: 10px;}
+#botones{
+    float: left;
+    width: 99px;
+    height: 20px;}
+#barra{
+    position: relative;
+    float: left;
+    width: 600px;
+    height: 16px;
+    padding: 2px;
+    border: 1px solid #CCCCCC;
+    background: #EEEEEE;}
+#progreso{
+    position: absolute;
+    width: 0px;
+        height: 16px;
+        background: rgba(0,0,150,.2);}
+
+/* body {margin: 3em 9em;}
+header {text-align: center;
+		background-color: maroon;
+		color: white;
+		margin-bottom: 6em}
+
+#controls { padding:20px; }
+.playing { background:#eee; }
+.stopped { background:#ccc; } */

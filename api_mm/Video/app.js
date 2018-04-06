@@ -1,14 +1,12 @@
 function main () {
-    const MAXIMO = 600; // ancho total en px de la barra de progreso, definido en css 
-    var oMedio = document.querySelector('#medio'); //objeto video
-    var oReproducir = document.querySelector('#reproducir'); //objeto boton reproducir
-    var oBarra = document.querySelector('#barra'); // objeto barra de progreso
-    var oProgreso = document.querySelector('#progreso'); // objeto "progreso": el interior coloreado de la barra de progreso
+    const maximo = 600; // ancho total en px de la barra de progreso, definido en css 
+    let oMedio = document.querySelector('#medio'); //objeto video; JQuery no soporta <vidoe> pero almacena los datos del nodo DOM como elelmento [0] del array que crea
+    let oReproducir = document.querySelector('#reproducir'); //objeto boton reproducir
+    let oBarra = document.querySelector('#barra'); // objeto barra de progreso
+    //var oProgreso = document.querySelector('#progreso'); // objeto "progreso": el interior coloreado de la barra de progreso
 
-    oReproducir.onclick = clicReproducir ;
-    oBarra.onclick = clicBarra;
-
-    //-------------- Funciones empleadas -------------------------//
+    oReproducir.addEventListener('click', clicReproducir)
+    oBarra.addEventListener('click', clicBarra)
 
     function clicReproducir () {
 
@@ -32,11 +30,11 @@ function main () {
              //si el video se esta reproduciendo
              var ratonX = e.pageX - oBarra.offsetLeft;
              // valor en x de la barra: x(raton) - x(inicio barra) 
-             var nuevoTiempo = ratonX * oMedio.duration / MAXIMO;
-            // valor x en segundos  x * t / x(MAXIMO)
+             var nuevoTiempo = ratonX * oMedio.duration/maximo;
+             // valor x en segundos  x * t / x(maximo)
              oMedio.currentTime = nuevoTiempo;
              // cambio de tiempo del video
-             oProgreso.style.width = ratonX + 'px';
+             oBarra.value = ratonX;
              // cambio de aspecto de la barra
         }
     }; // fin de la funcion clicBarra, manejadora de click en la barra
@@ -44,12 +42,12 @@ function main () {
     function estado(){
         if(!oMedio.ended){
             // si continua la reproducción
-            var total = parseInt(oMedio.currentTime * MAXIMO / oMedio.duration);
+            var total=parseInt(oMedio.currentTime * maximo/oMedio.duration);
             //paso el curretTime a pixels
-            oProgreso.style.width = total+'px';
+            oBarra.value = total;
             // actualizo el aspecto de la barra
         }else{
-            oProgreso.style.width = '0px';
+            oBarra.value = 0;
             // actualizo el aspecto de la barra
             oReproducir.value = 'Reproducir';
             // actualizo el aspecto del boton
@@ -63,4 +61,3 @@ function main () {
 
 
 window.addEventListener("load",main,false);
-
