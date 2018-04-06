@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Pruebas SVG</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style type="text/css">
+		body {width:80%;
+			margin: 0 auto;}
+		div svg {float: left;}
+		div p {margin: 1em;
+			width: 20%;
+			float: left;}
+		section {clear: both;}
+		svg.svg_1 {border: solid 2px silver;}
+		.str0 {stroke:#2B2A29;stroke-width:10}
+		.fil0 {fill:none}
+		.rect, .circle {fill:red;
+			   stroke:black;
+			   stroke-width:2;
+			   opacity:0.5;}
+		.circle {stroke-width:0.1cm;}
+		div p {display:none;}
+	</style>
+	<script>
+        var oSVG = {
+            oNodoSVG : {},
+			aElementosSVG : [],
+			cambiaColor : function(oEvent) { 
+				if (oEvent.target.style.fill != "yellow") {oEvent.target.style.fill = "yellow"}
+				else {oEvent.target.style.fill = "red"};	
+			},
+			cambiaColor: function (oEvent) {
+			    switch (oEvent.type) {
+			        case "mouseover":
+			            oEvent.target.style.fill = "yellow";
+			            break;
+			        case "mouseout":
+			            oEvent.target.style.fill = "black";
+			            break;
+			    }
+
+			}, // Fin del método cambia color
+			paginaCargada : function () {
+			    this.oNodoSVG = document.querySelector('#svg_frame').contentDocument;
+			    console.dir(this.oNodoSVG);
+			    this.aElementosSVG = this.oNodoSVG.querySelectorAll("rect, circle, ellipse");
+			    console.dir(this.aElementosSVG)
+			    for (var i = 0; i < this.aElementosSVG.length; i++) {
+			        this.aElementosSVG[i].onmouseover = this.cambiaColor.bind(this);
+					this.aElementosSVG[i].onmouseout = this.cambiaColor.bind(this);
+				};
+			} //Fin del método respondeEvento 
+		}; //Fin del objeto oSVG
+
+
+ 	window.addEventListener("load", oSVG.paginaCargada.bind(oSVG), false);	
+	</script>
+</head>
+
+
+<body>
+	<h1>SVG Interactivo</h1>
+	<section id="imagen">
+        <iframe id="svg_frame" src="Svg02_imagen.svg"/>
+            <!-- Fichero con tres imagenes (cuadrado, círculo y ovalo)
+                El id global de la etiqueta svg es svg1 -->
+	</section>
+</body>
+</html>

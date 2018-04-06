@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<title>SVG</title>
+		<meta charset="utf-8">
+		<meta name="" content="">
+		<meta name="" content="">
+		<meta name="author" content="Vanessa">	
+		<style type="text/css">
+			body{
+				font-family: verdana;
+			}
+            article {
+                overflow: auto;
+                position: relative;
+                clear: both;
+                width: 80%;
+                margin: 1% auto;
+            }
+            div.mapa {
+                width: 80%;
+                float: left;
+            }
+
+                div.mapa embed {
+                    width: 100%;
+                    height: 100%;
+                }
+
+			 p.info{
+                position: absolute;
+			 	width: 50%;
+			 	bottom: 0%;
+                right: 10%;
+			 	text-align: right;
+                margin-left: 20%;
+                background-color: beige;                
+			 }
+
+            div#bandera {
+                position: absolute;
+                width: 150px;
+                height: 100px;
+                bottom: 0%;
+                right: 10%;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
+
+		</style>
+
+        <script>
+            // Acceso al DOM de una imagen SVG vinculada a un documento HTML 
+            // Es importante tener en cuenta las indicaciones relativas a la carga de la página
+            function main() {
+
+                var oMapa = {
+                    oElementoSVG: {},
+                    aRegiones_path: [],
+                    aRegiones_poli: [],
+                    aRegiones: [],
+                    oNodoNombre: {},
+                    oNodoBandera: {},
+                    inRegion: function (oEvent) {
+                        var region = oEvent.target.getAttribute("id");
+                        this.oNodoNombre.innerHTML = region;
+                        this.oNodoBandera.querySelector("img").src="../Banderas/" + region + ".gif";
+                    },
+                    outMapa: function () {
+                        this.oNodoNombre.innerHTML = ""
+                        this.oNodoBandera.querySelector("img").src = "";
+                    },
+                    paginaCargada: function () {
+                        this.aRegiones = this.aRegiones_path.concat(this.aRegiones_poli);
+                        this.oElementoSVG = document.querySelector('embed').getSVGDocument().documentElement;
+                        // en este caso no  valtdría 
+                        // this.oElementoSVG = document.querySelector('embed').contentDocument;
+
+                        //this.oElementoSVG.setAttribute("height", "658.04449px");
+                        //this.oElementoSVG.setAttribute("width", "923.32129px");
+                        //this.oElementoSVG.setAttribute("viewBox", "200 0 658.04449 923.32129");
+
+                        this.oNodoNombre = document.getElementById("info_2");
+                        this.oNodoBandera = document.getElementById("bandera");
+                        this.aRegiones_path = this.oElementoSVG.querySelectorAll('path');
+                        this.aRegiones_poli = this.oElementoSVG.querySelectorAll('polygon');
+                        //this.aRegiones = this.aRegiones_path.concat(this.aRegiones_poli);
+                        // array de Nodos con todas los elementos: uno por cada region
+                        // no valido para arrais de nodos
+                        for (var i = 0; i < this.aRegiones_path.length; i++) {
+                            this.aRegiones_path[i].onmouseover = this.inRegion.bind(this)
+                        } // recorremos el array de nodos correspondientes a cada region
+                        for (var i = 0; i < this.aRegiones_poli.length; i++) {
+                            this.aRegiones_poli[i].onmouseover = this.inRegion.bind(this)
+                        } // recorremos el array de nodos correspondientes a cada region
+                        this.oElementoSVG.onmouseout = this.outMapa.bind(this)
+                    } //Fin del método paginaCargada
+                }; //Fin del objeto oSVG
+
+                oMapa.paginaCargada()
+            }
+
+            window.addEventListener("load",main,false);
+            //Es necesario esperar al evento window.onload 
+            //No funciona si se espera a la carga del documento
+
+        </script>
+	</head>
+
+	<body>
+		<h1>SVG</h1>
+        <article>
+            <h2>Imágen svg cargada mediante "embed"</h2>
+            <div id="mapa_2" class="mapa">
+                <embed id="imagen" type="image/svg+xml" src="CAs_de_España.svg"></embed>
+            </div>
+            <p id="info_2" class="info"></p>            
+        </article>
+        <div id="bandera"><img src="" alt="" /></div>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script>
+        window.onload = function () {
+           var objeto = document.querySelector("object").getSVGDocument().documentElement;
+            var poligonos = objeto.querySelectorAll("polygon");
+            var paths = objeto.querySelectorAll("path");
+            /* larioja=objeto.querySelector("#LaRioja");
+             cantabria=objeto.querySelector("#Cantabria");
+             galicia = objeto.querySelector("#Galicia");
+             islasbaleares = objeto.querySelector("#IslasBaleares");*/
+           var  span = document.getElementById("span");
+            for (var i = 0; i < paths.length; i++) {
+             
+                paths[i].onmouseover = function (evento) {
+                    var comunidad = evento.target;
+                    var id = comunidad.getAttribute("id");
+                    
+                   
+                    span.innerHtml = id;
+
+                }
+                    paths[i].onmouseout = function () {
+                        span.innerHtml = "ninguno";
+
+                    }
+                }
+            }
+        
+    </script>
+</head>
+<body>
+    <object data="CAs_de_España.svg" type="image/svg+xml" id="imagen"></object><br />
+    <span id="span"></span>
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Mostrar SVG (content)</title>
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style>
+		header, section {
+			width: 50%;
+			margin: 2px auto;
+		}
+		h1 {text-align: center;}
+		ul {list-style-type: none;
+			margin: 0px;
+			padding: 0px;}
+		li, p {margin: 10px 10px;
+			padding: 5px 5%;}
+		p.opcion	{
+			border-radius: 5px 5px;
+			background-color: orange;
+			color: blue} 
+	</style>
+	<script>
+        function main() {
+            var oSVG_1 = document.getElementById('svg1').contentDocument.documentElement;
+            oSVG_1.setAttribute("width", "600px");
+            oSVG_1.setAttribute("height", "300px");
+            oSVG_1.setAttribute("viewBox", "0 270 600 300");
+            var domContenedor_SVG_2 = document.getElementById('svg2')
+            console.dir(domContenedor_SVG_2);
+            var oSVG_2 = domContenedor_SVG_2.contentDocument.documentElement;
+            oSVG_2.setAttribute("width","600px");
+            oSVG_2.setAttribute("height","300px");
+            oSVG_2.setAttribute("viewBox", "0 0 900 900");
+            var domContenedor_SVG_3 = document.getElementById('svg3')
+            console.dir(domContenedor_SVG_3);
+            var oSVG_3 = domContenedor_SVG_3.contentDocument.documentElement;
+            oSVG_3.setAttribute("width", "600px");
+            oSVG_3.setAttribute("height", "300px");
+            oSVG_3.setAttribute("viewBox", "0 0 900 900");
+        };
+    window.addEventListener("load", main, false);
+	</script>
+</head>
+
+<body>
+	<header>
+		<h1>Imágenes SVG</h1>	
+	</header>
+    <section>
+        <p>Ejemplos de accesos al DOM del SVG utilizando contentDocument.documentElement</p>
+    </section>
+
+	<section>	
+		<p class="opcion" title="">Fichero a su tamaño</p>
+        <!-- svg width="600px" height="300px" viewBox=""0 271.4 600 300" -->
+        <object id="svg1" type="image/svg+xml" data="tigre.2.svg"></object>
+    </section>
+
+    <!-- ---------------------Segunda sección para el segundo ejemplo de SVG----------------------------------- -->
+
+    <section>
+    	<p class="opcion" title="">Fichero a escala (object)</p>
+        <!-- svg width="600px" height="300px" viewBox="0 0 900 900"-->
+        <object id="svg2" type="image/svg+xml" data="tigre.2.svg"></object>                   
+        <p class="opcion" title="">Fichero a escala (embed) : ERROR</p>        
+        <embed id="svg3" type="image/svg+xml" src="tigre.2.svg">
+	</section>
+</body>
+</html>

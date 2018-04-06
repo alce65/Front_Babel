@@ -1,0 +1,141 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<title>SVG</title>
+		<meta charset="utf-8">
+		<meta name="" content="">
+		<meta name="" content="">
+		<meta name="author" content="Vanessa">	
+		<style type="text/css">
+			body{
+				font-family: verdana;
+			}
+            article {
+                clear: both;
+                width: 80%;
+                margin: 1% auto;
+            }
+            .mapa {
+                width: 80%;
+                float: left;
+            }
+
+			 .info{
+                position: absolute;
+			 	width: 50%;
+			 	bottom: 10%;
+                right: 10%;
+			 	text-align: left;
+                margin-left: 2%;
+                background-color: beige;
+			 }
+
+		</style>
+
+        <script>
+            // Acceso al DOM de una imagen SVG vinculada a un documento HTML mediante dos de los posibles métodos:
+            // - la etiqueta OBJECT
+            // - la etiqueta EMBED, comprobándose la limitaciones de este segundo caso
+            // Es importante tener en cuenta las indicaciones relativas a la carga de la página
+            function main() {
+
+                var oSVG_embed = {
+                    cFileDatos :"",
+                    oElementoSVG: {},
+                    aRegiones_path: [],
+                    aRegiones_poli: [],
+                    aRegiones: [],
+                    oPrint: {},
+                    inRegion : function (oEvent) {
+                        this.oPrint.innerHTML = oEvent.target.getAttribute("id");
+                        //this.cFileDatos = 'ficheros/' + oEvent.target.getAttribute("id") + '.json';
+                        //this.oDatosAjax.pedirContenido('GET', this.cFileDatos, this.oDatosAjax.muestraDatos.bind(this));
+                    },
+                    outMapa: function () {
+                        oSVG_embed.oPrint.innerHTML = ""
+                    },
+                    paginaCargada: function () {
+                        this.aRegiones = this.aRegiones_path.concat(this.aRegiones_poli);
+                        this.oElementoSVG = document.querySelector('embed').getSVGDocument().documentElement;
+                        // en este caso no valtdría 
+                        // this.oElementoSVG = document.querySelector('embed').contentDocument;
+                        this.oPrint = document.getElementById("info_2");
+                        this.aRegiones_path = this.oElementoSVG.querySelectorAll('path');
+                        this.aRegiones_poli = this.oElementoSVG.querySelectorAll('polygon');
+                        //this.aRegiones = this.aRegiones_path.concat(this.aRegiones_poli);
+                        // array de Nodos con todas los elementos: uno por cada region
+                        // no valido para arrais de nodos
+                        for (var i = 0; i < this.aRegiones_path.length; i++) {
+                            this.aRegiones_path[i].onmouseover = this.inRegion.bind(this)
+                        } // recorremos el array de nodos correspondientes a cada region
+                        for (var i = 0; i < this.aRegiones_poli.length; i++) {
+                            this.aRegiones_poli[i].onmouseover = this.inRegion.bind(this)
+                        } // recorremos el array de nodos correspondientes a cada region
+                        this.oElementoSVG.onmouseout = this.outMapa.bind(this)
+                    } //Fin del método paginaCargada
+                }; //Fin del objeto oSVG
+
+                oSVG_embed.oDatosAjax = {
+                    oPeticion: {},
+                    sURL : "",
+                    inicializaAJAX: function () {
+                        if (window.XMLHttpRequest) {
+                            return new XMLHttpRequest();
+                        } else if (window.ActiveXObject) {
+                            return new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                    }, //fin de la función inicializaAJAX
+                    pedirContenido: function (metodo, url, funcion) {
+                        this.sURL = url + "?nocache=" + Math.random();
+                        this.oPeticion = this.inicializaAJAX();
+                        this.oPeticion.onreadystatechange = funcion;
+                        this.oPeticion.open(metodo, url, true);
+                        this.oPeticion.send(null);
+                    }, //fin de la función pedirContenido
+                    muestraDatos: function () {
+                        var indice;
+                        var miDiv = document.getElementById('info_2');
+                        if (this.oDatosAjax.oPeticion.readyState == 4) {
+                            if (this.oDatosAjax.oPeticion.status == 200) {
+                                var prueba = this.oDatosAjax.oPeticion.responseText;
+                                var miInformacion = JSON.parse(prueba);
+                                miDiv.innerHTML = '';
+
+                                // ________________MOSTRANDO INFORMACION ____________________ //
+
+                                var cadena = '';
+                                for (indice in miInformacion) {
+                                    cadena += '<p><b>' + indice + "</b>: " + miInformacion[indice] + "</p>";
+                                }
+
+                                miDiv.innerHTML += cadena;
+                            } else {
+                                miDiv.innerHTML = 'Error al abrir el archivo ' + this.cFileDatos;
+                            }
+                        }
+                    } // fin de la función muestraDatos
+                } // Fin del objeto oSVG_embed.oDatosAjax
+
+                oSVG_embed.paginaCargada()
+            }
+
+            window.addEventListener("load",main,false);
+            //Es necesario esperar al evento window.onload 
+            //No funciona si se espera a la carga del documento
+
+        </script>
+	</head>
+
+	<body>
+		<h1>SVG</h1>
+        <article>
+            <h2>Imágen svg cargada mediante "embed"</h2>
+            <div id="mapa_2" class="mapa">
+                <embed id="imagen" type="image/svg+xml" src="CAs_de_España.svg" width="100%" height="100%"></embed>
+            </div>
+            <p id="info_2" class="info"></p>
+        </article>
+        
+
+	</body>
+</html>

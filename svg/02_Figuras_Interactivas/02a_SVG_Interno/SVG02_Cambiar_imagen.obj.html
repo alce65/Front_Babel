@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta name="keywords" content="web, learning, html5, css3">
+	<meta name="author" content="Alejandro" >
+	<meta name="application-name" content="…">
+	<meta name="description" content="Ejercicios de HTML5">
+	<meta name="generator" content="Bluefish 2.2.4" >
+	<meta charset="UTF-8">
+	<title>Pruebas SVG</title>
+	<link rel="stylesheet" href="default.css">
+	<link rel="shortcut icon" href="fav_icon.png">
+	<style type="text/css">
+		body {width:80%;
+			margin: 0 auto;}
+		div svg {float: left;}
+		div p {margin: 1em;
+			width: 20%;
+			float: left;}
+		section {clear: both;}
+		svg.svg_1 {border: solid 2px silver;}
+		.str0 {stroke:#2B2A29;stroke-width:10}
+		.fil0 {fill:none}
+		.rect, .circle {fill:red;
+			   stroke:black;
+			   stroke-width:2;
+			   opacity:0.5;}
+		.circle {stroke-width:0.1cm;}
+		div p {display:none;}
+	</style>
+	<script>
+		var oSVG = {
+			aElementosSVG : [],
+			cambiaColor_A: function (oEvent) {
+			    //console.dir(oEvent.target.style.fill)
+				//if (oEvent.target.style.fill != "yellow") {oEvent.target.style.fill = "yellow"}
+			    //else {oEvent.target.style.fill = "red"};	
+			    oEvent.target.style.fill = "yellow"
+			}, // Fin del método cambia color
+
+			cambiaColor_R: function (oEvent) {
+			    oEvent.target.style.fill = "red";
+			}, // Fin del método cambia color
+
+			paginaCargada : function () {
+				this.aElementosSVG = document.querySelectorAll('svg');
+				for (var i=0; i < this.aElementosSVG.length; i++){
+					this.aElementosSVG[i].onmouseover = this.cambiaColor_A.bind(this);
+					this.aElementosSVG[i].onmouseout = this.cambiaColor_R.bind(this);
+				};
+			} //Fin del método respondeEvento 
+		}; //Fin del objeto oSVG
+
+
+ 	document.addEventListener("DOMContentLoaded", oSVG.paginaCargada.bind(oSVG), false);	
+	</script>
+</head>
+
+
+<body>
+	<h1>SVG Interactivo</h1>
+	<section id="rectangulos">
+		<div>
+			<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+				width="200px" height="200px" >
+				<rect class="rect" x="50" y="50" width="100" height="100" rx="20" ry="20"/>
+			</svg>
+			<p>Ejemplos de cuadrados de bordes redondeados, aplicando el formato como atributos o a través de estilos CSS</p>
+		</div>
+	</section>
+	<section id="circulos">
+		<div>
+			<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="200px" height="200px" >
+				<circle cx="100px" cy="100px" r="50px" class="circle"/>
+			</svg>
+			<p>Ejemplos de círculos, aplicando el formato como atributos o a través de estilos CSS</p>
+		</div>	
+	</section>
+	<section id="elipses">
+		<div>
+			<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="200px" height="200px" >
+				<ellipse cx="100px" cy="100px" rx="50px" ry="30px" class="circle" />
+			</svg>
+			<p>Ejemplos de elipses, aplicando el formato como atributos o a través de estilos CSS</p>
+		</div>	
+	</section>
+	<section>
+		<div>
+			<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="400px" height="200px" >
+			<text style="font-size: 72; font-weight: 900; fill: red; stroke: black; stroke-width: 0.6">
+				<tspan x="10" y="100">Hola mundo</tspan>
+			</text>
+			<p>Ejemplos de texto</p>
+			</svg>
+		</div>	
+	</section>
+</body>
+</html>

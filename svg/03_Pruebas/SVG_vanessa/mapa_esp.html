@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+	<head>
+		<title>SVG</title>
+		<meta charset="utf-8">
+		<meta name="" content="">
+		<meta name="" content="">
+		<meta name="author" content="Vanessa">
+		<script src="jquery-1.11.2.min.js"></script>
+		
+		<style type="text/css">
+			body{
+				font-family: verdana;
+			}
+			 #mapaEspana{
+			 	width: 50%;
+			 	float: left;
+			 }
+
+			 #infoEspana{
+			 	width: 50%;
+			 	float: right;
+			 	text-align: left;
+			 }
+
+		</style>
+
+		<script>
+
+		// *****************FUNCIONES DE PETICION ************************** //
+			var miPeticion;
+
+			function Muestra(){
+				
+				if(miPeticion.readyState == 4)
+				{					
+					if(miPeticion.status == 200){
+						var indice;
+						var prueba = miPeticion.responseText;
+						var miInformacion =  JSON.parse(prueba);
+						var miDiv = document.getElementById('infoEspana');
+						miDiv.innerHTML = '';
+			
+						// ________________MOSTRANDO INFORMACION ____________________ //
+
+						var cadena = '';
+						for(indice in miInformacion)
+						{		
+							cadena += '<p><b>' + indice + "</b>: " + miInformacion[indice] + "</p>";
+						}
+
+						miDiv.innerHTML += cadena;
+					}else{
+						alert('Error al abrir el archivo');
+					}
+				}
+			}
+
+			function Inicializa(){
+				if(window.XMLHttpRequest)
+				{
+					return new XMLHttpRequest();
+				}else if(window.ActiveXObject){
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+
+			function pedirContenido(metodo,url,funcion){
+				miPeticion = Inicializa();
+				miPeticion.onreadystatechange = funcion;
+				miPeticion.open(metodo,url,true);
+				miPeticion.send(null);	
+			}
+			// ********************************************************************************** //
+
+			$(document).ready(function()
+			{	
+				var paths = document.getElementsByTagName('object')[0];
+				//console.dir(paths);
+				var aComunidades = paths.contentDocument.getElementsByTagName('path');
+				console.dir(aComunidades);
+				
+				var aComunidades = paths.contentDocument.getElementsByTagName('path');
+				//console.dir(aComunidades);
+				for(var i=0; i<aComunidades.length; i++){
+					aComunidades[i].onclick = function(){
+						var direccion = 'ficheros/' + this.id + '.json';
+						pedirContenido('GET',direccion, Muestra );
+					};
+
+				}
+
+				var aComunidades = paths.contentDocument.getElementsByTagName('polygon');
+				//console.dir(aComunidades);
+				for(var i=0; i<aComunidades.length; i++){
+					aComunidades[i].onclick = function(){
+						var direccion = 'ficheros/' + this.id + '.json';
+						pedirContenido('GET',direccion, Muestra );
+					};
+				}
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>SVG</h1>
+		<div id="mapaEspana">
+			<object id="imagen" type="image/svg+xml" data="Comunidades_autónomas_de_España.svg" width="100%" height="100%"></object>
+		</div>
+
+		<div id="infoEspana">
+		</div>
+	</body>
+</html>
